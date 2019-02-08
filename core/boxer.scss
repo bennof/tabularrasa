@@ -1,0 +1,106 @@
+/* Tabular Rasa Boxer SCSS
+** Copyright (c) 2018 Benjamin Benno Falkner
+**
+** Permission is hereby granted, free of charge, to any person obtaining a copy
+** of this software and associated documentation files (the "Software"), to deal
+** in the Software without restriction, including without limitation the rights
+** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+** copies of the Software, and to permit persons to whom the Software is
+** furnished to do so, subject to the following conditions:
+**
+** The above copyright notice and this permission notice shall be included in all
+** copies or substantial portions of the Software.
+**
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+** FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+** AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+** LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+** OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+** SOFTWARE.
+*/
+
+/* Used Variables */
+$border-color: #ccc !default; 
+$document-width: 1024px !default;     // document width
+$box-border-radius: 10px !default;
+
+@mixin drop-shadow() {
+    -webkit-box-shadow: 10px 10px 29px -13px rgba(0,0,0,0.75);
+    -moz-box-shadow: 10px 10px 29px -13px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 29px -13px rgba(0,0,0,0.75);
+}
+
+@mixin drop-shadow-active() {
+    -webkit-box-shadow: 15px 10px 29px -13px rgba(0,0,0,0.85);
+    -moz-box-shadow: 15px 10px 29px -13px rgba(0,0,0,0.85);
+    box-shadow: 15px 10px 29px -13px rgba(0,0,0,0.85);
+}
+
+.larger-box { 
+    max-width: $document-width;
+    margin: 0 auto;
+    border-radius: 10px;
+    margin-top: -80px;
+    z-index: 500;
+    position: relative;
+}
+
+.box {
+    border: 1px solid $border-color;
+    border-radius: $box-border-radius;
+    margin: 10px 0;
+    padding: 0px;
+    position: relative;
+    width: 100%;
+    height: 400px;
+    overflow: hidden;
+    cursor: pointer;
+
+    h1 {
+        padding: 10px;
+        padding-bottom: 5px;
+        font-size: 28px;
+        line-height: 30px;
+    }
+    h2 {
+        text-transform: uppercase;
+        padding: 10px;
+        padding-bottom: 0px;
+        font-size: 16px;
+        line-height: 18px;
+        color: #bbb;
+    }
+    p { padding: 10px 5px 10px 10px;}
+
+    .top, .left, .right{
+        border-radius: 10px 10px 0px 0px;
+        height:60%;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    @media only screen and (min-width: 720px) {
+        .left{
+            float: left;
+            border-radius: 10px 0px 0px 10px;
+            height:100%;
+            width: 60%;
+        }
+
+        .right{
+            float: right;
+            border-radius: 0px 10px 10px 0px;
+            height:100%;
+            width: 60%;
+        }
+    }
+
+    @include drop-shadow();
+
+    &:hover {
+        @include drop-shadow-active();
+    }
+}
+
