@@ -1,0 +1,242 @@
+/* Tabular Rasa Typo2 SCSS
+** Copyright (c) 2018-2019 Benjamin Benno Falkner
+**
+** Permission is hereby granted, free of charge, to any person obtaining a copy
+** of this software and associated documentation files (the "Software"), to deal
+** in the Software without restriction, including without limitation the rights
+** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+** copies of the Software, and to permit persons to whom the Software is
+** furnished to do so, subject to the following conditions:
+**
+** The above copyright notice and this permission notice shall be included in all
+** copies or substantial portions of the Software.
+**
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+** FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+** AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+** LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+** OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+** SOFTWARE.
+*/
+
+/* Used Variables */
+$font: sans-serif !default;
+$font-color: #333 !default;
+$font-size: 16px !default;
+
+/* Header */
+$header-font: $font !default;
+$header-color: $font-color;
+
+/* Lines */
+$line-color: #ccc !default;
+
+/* Links */
+$link-color: #03a2f1 !default;
+
+/* Page */
+$page-width: 1000px !default;
+
+$name-img: 'Fig' !default;
+$name-table: 'Tab' !default;
+
+
+
+
+html {
+    font-family: $font;
+    font-size:  $font-size;
+    line-height: 24px;
+    color: $font-color;
+    text-align: justify;
+}
+
+
+/* Helpers */
+.clear::after { content:""; clear: both; display: table; }
+
+/* Text align */
+.left { text-align: left; }
+.right { text-align: right; > * {margin-left:5px;}}
+.center { text-align: center; }
+.justify { text-align: justify; }
+
+.bold { font-weight: bold; }
+
+/* circle shape */ 
+.circle { border-radius: 50%; }
+
+/* Page */
+article, .page { 
+    max-width: $page-width;
+    margin: 0 auto;
+    padding: 0 4px;
+
+    counter-reset: section;
+    counter-reset: cimage;   
+    counter-reset: ctable;      
+}
+
+
+/* Header */
+h1{ font-size: 2.4*$font-size; line-height: 2.6*$font-size; color: $header-color; font-weight: lighter; margin: 30px 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid $line-color;  }
+h2{ font-size: 1.8*$font-size; line-height: 2.4*$font-size; color: $header-color; font-weight: normal;  margin: 10px 0; padding-top: 5px;}
+h3{ font-size: 1.5*$font-size; line-height: 2.0*$font-size; color: $header-color; font-weight: lighter; margin: 10px 0; padding-top: 5px;}
+h4{ font-size: 1.2*$font-size; line-height: 1.5*$font-size; color: $header-color; font-weight: bold; font-variant: small-caps; }
+h5{ font-size: 1.0*$font-size; line-height: 1.5*$font-size; color: $header-color; font-weight: bold; }
+h6{ font-size: 0.8*$font-size; line-height: 1.5*$font-size; color: $header-color; font-weight: bold; font-variant: small-caps; }
+
+/* Text */
+p {
+    margin-bottom: 0.5*$font-size;
+}
+
+br {
+    line-height: 0.5*$font-size;
+}
+
+svg {
+    margin-bottom: -0.1*$font-size;
+    stroke: $font-color;
+    display: inline-block;
+}
+
+a {
+    text-decoration: none;
+    color: $link-color;
+    font-weight: normal;
+    svg {
+        stroke: $link-color;
+        &:hover {
+            stroke: darken( $link-color, 10% ) !important;
+        }
+    }
+    &:hover {
+        text-decoration: underline;
+        color: darken( $link-color, 10% ) !important;
+    }
+}
+
+ul, ol, dl {
+    margin: 0.75*$font-size 0;
+}
+
+dl {
+    dt { font-style: italic;}
+    dd { padding-left: 20px; }
+}
+
+dfn {
+    font-family: monospace;
+}
+
+ 
+*[attr-text]::after {
+    content: $name-img ': ' attr(attr-text);
+    font-size: 0.75*$font-size;
+}
+figure[attr-text]::after {
+    counter-increment: cimage;
+    content: $name-img counter(cimage) ': ' attr(attr-img);
+    font-size: 0.75*$font-size;
+}
+*[attr-table]::after {
+    counter-increment: ctable;
+    content: $name-table counter(ctable)': ' attr(attr-table);
+    font-size: 0.75*$font-size;
+}
+
+
+img {max-width: 100%;}
+
+
+/* table */
+table {
+    table-layout:fixed;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: inherit;
+    padding: 10px;
+    margin-bottom: 0.5*$font-size;
+    border-top: 1px solid $line-color;
+    border-bottom: 1px solid $line-color;
+
+    input[type=text] {
+        margin:0;
+        display:block;
+        height: auto;
+        width: auto;
+        padding: 2px;
+    }
+    th, td {
+        text-align: left;
+        padding: 8px;
+        background-color: inherit;
+    }
+
+    td:hover { background-color: #eee; }
+    /*tr:nth-child(even){ background-color: #dcc7aa; }*/
+    th { border-bottom: 1px solid $line-color;}
+}
+
+/* Quotes */
+blockquote {
+    font-family: serif;
+    border-left: 1px solid $line-color;
+    padding-left: 5px;
+    font-style: italic;
+    margin-bottom: 0.5*$font-size;
+    font-size: 1.2*$font-size;
+
+    .ref {
+        display: block;
+        text-align: right;
+        font-weight: bold;
+        font-size: 0.8*$font-size;
+    }
+}
+
+/* Footnotes */
+.ref {
+    a {
+        border: none;
+        vertical-align: super;
+        font-size: 0.6*$font-size;
+    }
+}
+footer, .fn {
+    margin-top: 20px;
+    border-top: 1px solid $line-color;
+    font-size: 0.8*$font-size;
+    line-height: 1.2*$font-size;
+    
+    p {
+        & > a { font-weight: bold;}
+        padding-bottom: $font-size;
+        margin: 0;
+    } 
+}
+
+/* Header */
+header, .header {
+    display: block;
+    width: 100%;
+    font-family: $font;
+    .path, .tags, .date, .author {
+        font-size: 0.8*$font-size;
+        line-height: 1.2*$font-size;
+    }
+    .path {text-align: left; }
+    .tags {text-align: left; }
+    .date {text-align: right; }
+    .author {text-align: right; }
+    h1, h2 {border:none;}
+    h1{ font-size: 2.6*$font-size; line-height: 2.8*$font-size; }
+    h2{ font-size: 2.0*$font-size; line-height: 2.2*$font-size; }
+
+    summary {
+        font-style: italic;
+    }
+    &::after { content:""; clear: both; display: table; }
+}

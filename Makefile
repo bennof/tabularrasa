@@ -1,22 +1,35 @@
-TARGET ?= "./style.css"
-
-
+# written by Benjamin Benno Falkner
+SCSS     ?= tabularrasa.scss
+CSS_MIN  ?= tabularrasa-min.css
+TARGET   ?= style.css
 
 
 all: deps build 
 
-repl: main.scss
-	sass --watch main.scss $(TARGET)
+shell: $(SCSS)
+	python3 -m http.server 8080 &
+	sass --watch $(SCSS) $(TARGET)
 
-build: $(TARGET)
+build: $(TARGET) $(CSS_MIN)
 
 deps: 
 
+clean:
+	rm -f *.css *.map
+
+update: 
+	git pull
+
+upload:
+	git commit -a
+	git push origin master
 
 help:
 	@echo "Help:"
 	@echo "TARGET: $(TARGET)"
 
+$(TARGET): $(SCSS)
+	sass -s compressed $< $@
 
-$(TARGET): main.scss
+$(CSS_MIN): $(SCSS)
 	sass -s compressed $< $@

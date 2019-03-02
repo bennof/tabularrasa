@@ -1,0 +1,45 @@
+<input type="checkbox" id="navmenu">
+<ul class="page">
+        <li class="logo"><a href="#null">Logo</a></li>
+        <li class="has-children">
+            <a href="#null">Linke</a>
+            <ul>
+                <li><a href="#null">Linke</a></li>
+                <li><a href="#null">Linke</a></li>
+                <li><a href="#null">Linke</a></li>
+            </ul>
+        </li>
+        <li><a href="#null" data-count="5">Linke</a></li>
+        <!-- right -->    
+        <li class="right show-menu">
+            <label for="navmenu">
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                     <g fill="none"  stroke-width="4" stroke-linecap="round">
+                           <path  d="M 4,8 L 28,8" />
+                        <path  d="M 4,16 L 28,16" />
+                        <path  d="M 4,24 L 28,24" />
+                    </g>
+                </svg>
+            </label>
+        </li>
+        <li class="right quick-menu">
+            <input type="checkbox" id="navsearch">
+            <label for="navsearch"> 
+                <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                    <g fill="none" stroke-width="4" stroke-linecap="round">
+                        <path d="M 20,20 L 29,29" />
+                        <circle cx="13" cy="13" r="10" />
+                    </g>
+                </svg>
+            </label>
+            <div class="hidden">
+                <div class="tabular">
+                <input class="hcbox eleven right" type="search" placeholder="search ..."/>
+                <label class="hcbox one left bold" for="navsearch">X</label>
+                </div>
+            </div>
+        </li>
+        <li class="right"><a href="#null">Rechts</a></li>
+        <li class="hide-menu"><label class="bold" for="navmenu">X</label></li>
+        
+    </ul>

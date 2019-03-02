@@ -1,0 +1,180 @@
+/* Tabular Rasa Menu2 SCSS
+** Copyright (c) 2018-2019 Benjamin Benno Falkner
+**
+** Permission is hereby granted, free of charge, to any person obtaining a copy
+** of this software and associated documentation files (the "Software"), to deal
+** in the Software without restriction, including without limitation the rights
+** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+** copies of the Software, and to permit persons to whom the Software is
+** furnished to do so, subject to the following conditions:
+**
+** The above copyright notice and this permission notice shall be included in all
+** copies or substantial portions of the Software.
+**
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+** FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+** AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+** LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+** OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+** SOFTWARE.
+*/
+
+/* Lines */
+$line-color: #ccc !default;
+$font-size: 16px !default;
+$menu-collapse: 800px !default;
+$menu-background: white !default;
+
+
+nav {    
+    ul {
+        height: 80px;
+        line-height:80px;
+        border-bottom: 1px solid $line-color;
+        position: relative;
+        li {
+            display: inline-block;
+            padding: 0 10px 0 0;
+            &.right {
+                float: right;
+                text-align: right;
+                padding: 0 0 0 10px;
+            }
+
+            &.has-children > a::after{
+                content: '';
+                display: inline-block;
+                width: 5px; 
+                height: 5px; 
+                transform: rotate(-135deg);
+                margin-bottom: 5px;
+                margin-left: 4px;
+                border-left: 2px solid $line-color;
+                border-top: 2px solid $line-color;
+            }
+
+            &.has-children:hover > a::after{
+                transform: rotate(45deg);
+            }
+
+            ul {
+                margin:0;
+                margin-top: -10px;
+                padding: 0;
+                display: none;
+                position: absolute;
+                background: $menu-background;
+                height: auto;
+                line-height: 20px;
+                min-width: 120px;
+                border: 1px solid $line-color;
+                li {
+                    display: block;
+                    padding: 10px;
+                }
+            }
+
+            &:hover ul {
+                display: block;
+            }
+
+            *[data-count] {
+                position: relative;
+            }
+            *[data-count]::after {
+                content: attr(data-count);
+                position:absolute;
+                color: white;
+                background: orange;
+                width: 1.4em;
+                height: 1.4em;
+                top:-20%;
+                line-height: $font-size;
+                text-align:center;
+                border-radius: 50%;
+                font-size: 60%;
+            }
+        }
+
+        li.hide-menu, li.show-menu { display: none; }
+    }
+
+    input[type=checkbox]#navmenu {
+        @media only screen and (max-width: $menu-collapse) {
+            & ~ ul { 
+                    height: 100%;
+                    li {
+                        display: none;
+                        &.logo, &.show-menu, &.quick-menu {display: inline-block;}
+                        ul {position: static; }
+                }
+            }
+
+            &:checked ~ ul li {
+                display: block;
+                background: $menu-background;
+                &.show-menu, &.quick-menu {
+                    display: none;
+                }
+                &.right {
+                    float: none;
+                    text-align: left;
+                    padding: 0 10px 0 0;
+                }
+                &.hide-menu {
+                    display: block;
+                    position: absolute;
+                    top:0;
+                    right:0;
+                }
+            }
+        }
+    }
+
+    svg {
+        width: 16px;
+        height:16px;
+    }
+
+    label {
+        margin: 0;
+        text-decoration: none;
+        color: $link-color;
+        font-weight: normal;
+        cursor: pointer;
+        svg {
+            stroke: $link-color;
+            &:hover {
+                stroke: darken( $link-color, 10% ) !important;
+            }
+        }
+        &:hover {
+            text-decoration: underline;
+            color: darken( $link-color, 10% ) !important;
+        }
+    }
+
+    input[type=checkbox] {
+        visibility: hidden;
+        margin: 0;
+        width: 0;
+        height: 0;
+        position: absolute;
+        display: inline-block;
+
+        & ~ .hidden {
+            display: none;
+            position: absolute;
+            background: white;
+            right: 0;
+            top: 60px;
+            line-height:40px;
+            width: 100%;
+        }
+
+        &:checked ~ .hidden { 
+            display: block;
+        }
+    }   
+}
