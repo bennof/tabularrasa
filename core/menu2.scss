@@ -24,15 +24,22 @@
 $line-color: #ccc !default;
 $font-size: 16px !default;
 $menu-collapse: 800px !default;
-$menu-background: white !default;
+$menu-background:rgba(255,255,255,0.9) !default;
 
 
 nav {    
-    ul {
-        height: 80px;
-        line-height:80px;
-        border-bottom: 1px solid $line-color;
-        position: relative;
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    background: $menu-background;
+    height: 60px;
+    line-height:60px;
+    border-bottom: 1px solid $line-color;
+
+    img {height: 16px; line-height:60px;}
+
+    
         li {
             display: inline-block;
             padding: 0 10px 0 0;
@@ -96,9 +103,8 @@ nav {
                 font-size: 60%;
             }
         }
-
         li.hide-menu, li.show-menu { display: none; }
-    }
+    
 
     input[type=checkbox]#navmenu {
         @media only screen and (max-width: $menu-collapse) {

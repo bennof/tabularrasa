@@ -14,6 +14,8 @@ build: $(TARGET) $(CSS_MIN)
 
 deps: 
 
+
+
 clean:
 	rm -f *.css *.map
 
@@ -33,3 +35,6 @@ $(TARGET): $(SCSS)
 
 $(CSS_MIN): $(SCSS)
 	sass -s compressed $< $@
+
+*.ico: *.svg 
+	convert -density 384 $@ -define icon:auto-resize $<

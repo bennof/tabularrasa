@@ -22,7 +22,7 @@
 
 /* Used Variables */
 $font: sans-serif !default;
-$font-color: #333 !default;
+$font-color: #555 !default;
 $font-size: 16px !default;
 
 /* Header */
@@ -40,6 +40,7 @@ $page-width: 1000px !default;
 
 $name-img: 'Fig' !default;
 $name-table: 'Tab' !default;
+$name-file: 'File' !default;
 
 
 
@@ -70,6 +71,7 @@ html {
 /* Page */
 article, .page { 
     max-width: $page-width;
+    width: 100%;
     margin: 0 auto;
     padding: 0 4px;
 
@@ -131,7 +133,27 @@ dfn {
     font-family: monospace;
 }
 
- 
+pre {
+    white-space: pre-wrap;
+    white-space: -moz-pre-wrap; 
+    white-space: -pre-wrap;
+    white-space: -o-pre-wrap; 
+    word-wrap: break-word;
+    margin-bottom: 0.5*$font-size;
+    > code {
+        padding: 10px;
+        display: block;
+        border-top: 1px solid $line-color;
+        border-bottom: 1px solid $line-color;
+    }
+}
+
+pre[code-file]::after {
+    content: $name-file ': ' attr(code-file);
+    font-size: 0.75*$font-size;
+    display: block;
+}
+
 *[attr-text]::after {
     content: $name-img ': ' attr(attr-text);
     font-size: 0.75*$font-size;
