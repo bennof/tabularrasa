@@ -20,7 +20,7 @@
 </head>
 <body class="app">
     <!-- HEADER -->
-    <nav html-src="menu.html"></nav>
+    <nav html-src="menu2.html"></nav>
     <!-- CONTENT -->
     <div class="fill"> 
         <div class="page" html-src="text.html" html-content></div>
@@ -29,8 +29,17 @@
     <!-- FOOTER -->
     <div class="center" html-src="footer.html"></div>
 
+    <!-- POPUP -->
+    <div id="popup_area" style="width:25%;"></div>
+
     <!-- SCRIPT LOADER -->
-    <script src="../js/helper.js"></script>
+    <script src="../js/tabularrasa.js"></script>
+    <script>
+        tabularrasa.clean_code(document,'clean-code');
+        tabularrasa.autoload_html('html-src');
+        tabularrasa.router_html('html-content');
+        
+    </script>
     
 </body>
 </html>

@@ -9,6 +9,12 @@
                 <li><a href="#forms2">forms2</a></li>
             </ul>
         </li>
+        <li class="has-children">
+            <a href="#js">JS</a>
+            <ul>
+                <li><a href="#jscore">core</a></li>
+            </ul>
+        </li>
         <li><a href="#legacy" data-count="6">Legacy</a></li>
         <!-- right -->    
         <li class="right show-menu">
@@ -32,10 +38,10 @@
                     </g>
                 </svg>
             </label>
-            <div class="hidden">
-                <div class="tabular">
-                <input class="hcbox eleven right" type="search" placeholder="search ..."/>
-                <label class="hcbox one left bold" for="navsearch">X</label>
+            <div class="hidden page search">
+                <div  class="tabular">
+                <input id="Search_Menu" class="hcbox" type="search" placeholder="search ..." autofocus/>
+                <label class="hcbox bold" for="navsearch">X</label>
                 </div>
             </div>
         </li>
@@ -43,3 +49,7 @@
         <li class="hide-menu"><label class="bold" for="navmenu">X</label></li>
         
     </ul>
+
+    <script>
+        new tabularrasa.autocomplete('#Search_Menu',{url:'/index2.html',hint:'data/autocomplete.json?q='});
+    </script>

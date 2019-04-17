@@ -1,4 +1,7 @@
-# written by Benjamin Benno Falkner
+# Makefile
+# 2018-2019 written by Benjamin Benno Falkner
+# https://github.com/bennof/tabularrasa
+
 SCSS     ?= tabularrasa.scss
 CSS_MIN  ?= tabularrasa-min.css
 TARGET   ?= style.css
@@ -14,7 +17,8 @@ build: $(TARGET) $(CSS_MIN)
 
 deps: 
 
-
+version:
+	git tag
 
 clean:
 	rm -f *.css *.map

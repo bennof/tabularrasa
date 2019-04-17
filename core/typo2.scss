@@ -62,7 +62,6 @@ html {
 .right { text-align: right; > * {margin-left:5px;}}
 .center { text-align: center; }
 .justify { text-align: justify; }
-
 .bold { font-weight: bold; }
 
 /* circle shape */ 
@@ -210,7 +209,6 @@ blockquote {
     font-style: italic;
     margin-bottom: 0.5*$font-size;
     font-size: 1.2*$font-size;
-
     .ref {
         display: block;
         text-align: right;
@@ -249,16 +247,13 @@ header, .header {
         font-size: 0.8*$font-size;
         line-height: 1.2*$font-size;
     }
-    .path {text-align: left; }
+    .path,
     .tags {text-align: left; }
-    .date {text-align: right; }
+    .date,
     .author {text-align: right; }
     h1, h2 {border:none;}
     h1{ font-size: 2.6*$font-size; line-height: 2.8*$font-size; }
     h2{ font-size: 2.0*$font-size; line-height: 2.2*$font-size; }
-
-    summary {
-        font-style: italic;
-    }
+    summary { font-style: italic; }
     &::after { content:""; clear: both; display: table; }
 }
