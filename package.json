@@ -1,0 +1,32 @@
+{
+  "name": "tabularrasa",
+  "version": "1.0.0",
+  "description": "A minimal CSS/JS library written in SCSS and JS.",
+  "main": "server.js",
+  "directories": {
+    "example": "example",
+    "lib": "lib"
+  },
+  "dependencies": {
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "sass": "^1.20.3",
+    "uglify-js": "^3.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bennof/tabularrasa.git"
+  },
+  "keywords": [],
+  "author": "Benjamin 'Benno' Falkner",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bennof/tabularrasa/issues"
+  },
+  "homepage": "https://github.com/bennof/tabularrasa#readme"
+}

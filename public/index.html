@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tabular Rasa</title>
+    
+    <!-- STYLE -->
+    <link rel="stylesheet" type="text/css" href="css/tabularrasa.css" />
+
+    <!-- JS -->
+    <script src="js/tr_min.js"></script>
+
+    <!-- Math Support -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML' async></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [['$','$'],['\\(','\\)']],
+            processClass: "math",
+            ignoreClass: "no-math"
+        }
+    });
+    </script>
+</head>
+<body>
+    <!-- NAVIGATION -->
+    <nav html-src="menu.html"></nav>
+    
+    <!-- CONTENT -->
+    <main html-src="data/index_page.html" html-router></main>
+
+    <!-- FOOTER -->
+    <footer class="clear" html-src="footer.html"></footer>
+
+    <!-- POPUP -->
+    <div id="popup_container" style="width:25%;"></div>
+
+    <!-- SCRIPT -->
+    <script>
+        tabularrasa.clean_code(document);
+        tabularrasa.load_html_src();
+        tabularrasa.start_router();
+    </script>
+</body>
+</html>

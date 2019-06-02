@@ -1,0 +1,57 @@
+# Makefile
+# 2018-2019 written by Benjamin Benno Falkner
+# https://github.com/bennof/tabularrasa
+
+SCSS       ?= tabularrasa.scss
+CSS_MIN    ?= tabularrasa-min.css
+CSS_TARGET ?= style.css
+JSI        ?= tabularrasa.jsi
+JS_MIN     ?= tabularrasa-min.js
+JS_TARGET  ?= script.js 
+
+all: deps build 
+
+shell: $(SCSS)
+	python3 -m http.server 8080 &
+	sass --watch $(SCSS) $(TARGET)
+
+build: $(CSS_TARGET) $(CSS_MIN) $(JS_TARGET) $(JS_MIN)
+
+deps: 
+
+version:
+	git tag
+
+clean:
+	rm -f *.css *.map
+
+update: 
+	git pull
+
+upload:
+	git commit -a
+	git push origin master
+
+
+$(CSS_TARGET): $(SCSS)
+	sass -s compressed $< $@
+
+$(CSS_MIN): $(SCSS)
+	sass -s compressed $< $@
+
+$(JS_TARGET): $(JSI)
+	FILES=""; while IFS= read -r var; do  FILES="$$FILES $$var"; done < $< ; uglifyjs $$FILES-o $@
+
+$(JS_MIN): $(JSI)
+	FILES=""; while IFS= read -r var; do  FILES="$$FILES $$var"; done < $< ; uglifyjs $$FILES-o $@
+
+
+
+%.js: %.jsi
+	FILES=""; while IFS= read -r var; do  FILES="$$FILES $$var"; done < $< ; uglifyjs $$FILES-o $@
+
+%.css: %.scss
+	sass -s compressed $< $@
+
+%.ico: %.svg 
+	convert -density 384 $@ -define icon:auto-resize $<

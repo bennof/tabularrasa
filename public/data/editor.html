@@ -1,0 +1,62 @@
+<article > <!--contenteditable="true"-->
+    <header>
+      <nav>
+        <a href="#data/index_page">tabularrasa</a>
+        <a href="#nil">example</a>
+        <a href="#data/editor">editor</a>
+      </nav>
+      <time datetime="1914-12-20 08:30:45">1914-12-20</time>
+      <address><a href="#nul">benno</a> </address>
+
+      <h1>Typography with HTML </h1>
+      <h2>Using Tabular Rasa to write text</h2>
+    </header>
+    <summary>Based on an example taken from wikipedia.org.</summary>
+    <div class="six fleft">
+        <textarea name="input" id="input" style="width:100%;" rows="50">
+Heading
+=======
+
+## Sub-heading
+
+Paragraphs are separated
+by a blank line.
+
+Two spaces at the end of a line  
+produces a line break.
+
+Text attributes _italic_, 
+**bold**, `monospace`.
+
+Horizontal rule:
+
+---
+
+Bullet list:
+
+  * apples
+  * oranges
+  * pears
+
+Numbered list:
+
+  1. wash
+  2. rinse
+  3. repeat
+
+A [link][example].
+
+  [example]: http://example.com
+
+![Image](Icon-pictures.png "icon")
+
+> Markdown uses email-style > characters for blockquoting.
+
+Inline <abbr title="Hypertext Markup Language">HTML</abbr> is supported.
+        </textarea>
+        <button onclick="document.getElementById('output').value = sam.parse(document.getElementById('input').value);">Run!</button>
+    </div><div class="six fleft">
+        <textarea name="output" id="output" style="width:100%;" rows="50"></textarea>
+    </div>
+    
+</article>
