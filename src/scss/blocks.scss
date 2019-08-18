@@ -1,4 +1,4 @@
-/* Tabular Rasa SCSS Application
+/* Tabular Rasa SCSS Blocks
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,4 +20,23 @@
 ** SOFTWARE.
 */
 
-// # An App Layout
+
+// # Block Design
+
+// ## Used Variables
+$background1: #ffffff !default;
+$background2: #f3f3f3 !default;
+$color1:      #cccccc !default;
+$radius:      5px !default;
+
+// ## Style
+.tr-blocks {
+    background: $background2;
+    & > * {
+        border-radius: $radius;
+        border: 1px solid $color1;
+        margin: 5px;
+        padding: 5px;
+        background: $background1;
+    }
+}

@@ -1,5 +1,5 @@
-/* Tabular Rasa Page SCSS
-** Copyright (c) 2018 Benjamin Benno Falkner
+/* Tabular Rasa SCSS Page
+** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -20,48 +20,117 @@
 ** SOFTWARE.
 */
 
+// # A Page Layout
+
 /* Main */
 $page-width: 1000px !default; // defines max width
+$elem-background: white;
+$background: white;
+
+// colors (minimal)
+$line-color: #ccc !default;
+$link-color: #03a2f1 !default;
 
 
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
+* {
+    box-sizing: border-box;
+    margin: 0;
 }
 
-html, body {
+html, body, #app {
     height: 100%;
     width: 100%;
     margin: 0;
     padding: 0;
+    background: $background;
 }
 
-main {
+
+//@import "page_menu";
+
+article {
     max-width: $page-width;
     width: 100%;
-    margin: 0 auto;
-    padding: 0 4px;
+    margin: 0px auto;
+    position: relative;
+
+    & > * {
+        margin: 0px auto;
+        width:100%;
+    }
+
+    header {
+        text-align: center;
+        .date {
+            color:$color5;
+        }
+        img {
+            width: 100%;
+            max-height: 45vh;
+            object-fit: cover;
+        }
+    }
+
+    section {
+        columns: 1;
+    }
+    section.author{
+        border-top: 1px solid $color3;
+        img.icon{width:32pt; height:32pt; object-fit: cover;  }
+    }
+
+    section.posts{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        /*columns: 3;*/
+
+        & > * {
+            flex-grow: 1;
+            @media screen and (min-width: 720px){
+                flex-basis: 33%;
+            }
+            margin: 10pt;
+        }
+    }
 }
 
-body > footer {
-    //text-align: center;
-    font-size: 11px; line-height: 14px;
+// hero section
+// @import "page_hero";
+
+
+
+footer {
     max-width: $page-width;
     width: 100%;
-    margin: 0 auto;
-    margin-top: 15px;
+    margin: 0px auto;
+    padding: 35px 0px 20px 0px;
+    font-size: 9pt;
+    line-height: 12pt;
+    img {height: 10pt;}
+}
+footer::after {
+    content:"";
+    clear: both;
+    display: table;
+}
+
+
+.pagination{
+    margin: 15pt 0;
+    text-align: center;
 }
 
 /* column model */
-.one    { width: 8.33% !important; }
-.two    { width: 16.66%!important; }
-.three  { width: 25%!important; }
-.four   { width: 33.33%!important; }
-.five   { width: 41.66%!important; }
-.six    { width: 50%!important; }
-.seven  { width: 58.33%!important; }
-.eight  { width: 66.66%!important; }
-.nine   { width: 75%!important; }
-.ten    { width: 83.33%!important; }
-.eleven { width: 91.66%!important; }
-.twelve { width: 100%!important; }
+.one    { display: inline-block; width: 8.33% !important; }
+.two    { display: inline-block; width: 16.66%!important; }
+.three  { display: inline-block; width: 25%!important; }
+.four   { display: inline-block; width: 33.33%!important; }
+.five   { display: inline-block; width: 41.66%!important; }
+.six    { display: inline-block; width: 50%!important; }
+.seven  { display: inline-block; width: 58.33%!important; }
+.eight  { display: inline-block; width: 66.66%!important; }
+.nine   { display: inline-block; width: 75%!important; }
+.ten    { display: inline-block; width: 83.33%!important; }
+.eleven { display: inline-block; width: 91.66%!important; }
+.twelve { display: inline-block; width: 100%!important; }

@@ -1,5 +1,5 @@
 *.map
 *.css
-build.bat
-example/data/oauth.json
+example
 node_modules
+priv

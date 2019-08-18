@@ -1,4 +1,4 @@
-/* Tabular Rasa SCSS Application
+/* Tabular Rasa SCSS Hero
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,4 +20,32 @@
 ** SOFTWARE.
 */
 
-// # An App Layout
+// # A Hero Theme
+
+article.hero,
+section.hero {
+    max-width: 100%;
+    width:100%;
+    min-height: 100vh;
+    background-position:center;
+	background-repeat:no-repeat;
+    background-size:cover;
+
+    img.hero {width:100%; max-width:100%;height:100vh; object-fit: cover;}
+    & > * ,h1,h2,h3{
+        max-width: $page-width;
+        margin: 0px auto;
+        min-height: auto;
+        text-align: center;
+        /*background: rgba( $elem-background, .7 );*/
+        color: white;
+        text-shadow: 1px 1px 4px $color0;
+    }
+    a {font-weight: bold;}
+    & > *:first-child { padding-top: 105px; }
+}
+
+article.hero.small,
+section.hero.small{
+    min-height: 65vh;
+}

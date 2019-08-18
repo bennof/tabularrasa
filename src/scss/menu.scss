@@ -1,0 +1,156 @@
+/* Tabular Rasa SCSS Menu
+** Copyright (c) 2018-2019 Benjamin Benno Falkner
+**
+** Permission is hereby granted, free of charge, to any person obtaining a copy
+** of this software and associated documentation files (the "Software"), to deal
+** in the Software without restriction, including without limitation the rights
+** to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+** copies of the Software, and to permit persons to whom the Software is
+** furnished to do so, subject to the following conditions:
+**
+** The above copyright notice and this permission notice shall be included in all
+** copies or substantial portions of the Software.
+**
+** THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+** IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+** FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+** AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+** LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+** OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+** SOFTWARE.
+*/
+
+// # A CSS Responsive Menu
+
+body > nav,
+#app > nav {
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    background: $elem-background;
+    z-index: 1000;
+    height: 60px;
+    line-height:60px;
+    border-bottom: 1px solid $line-color;
+
+    * {
+        height: 30px;
+        margin: 15px;
+        line-height:30px;
+    }
+
+    img, svg {
+        margin-bottom: -10px;
+    }
+
+    ul, li {
+        display: inline-block;
+    }
+
+    ul {
+        float: right;
+    }
+
+    li {
+        margin:0;
+    }
+
+    .nav_current {
+        background:$line-color;
+    }
+
+    label {
+        margin: 0;
+        text-decoration: none;
+        color: $link-color;
+        font-weight: normal;
+        cursor: pointer;
+        svg {
+            stroke: $link-color;
+            &:hover {
+                stroke: darken( $link-color, 10% ) !important;
+            }
+        }
+        &:hover {
+            text-decoration: underline;
+            color: darken( $link-color, 10% ) !important;
+        }
+
+        &.menu {
+            position: absolute;
+            top: 0;
+            right: 0;
+            @media screen and (min-width: 800px) {
+                display: none;
+            }
+        }
+    }
+    @media screen and (max-width: 800px) {
+        input.menu ~ ul.menu {
+            display: none;
+            margin-top: 0px;
+            background: white;
+            height: auto;
+            min-width: 240px;
+            max-width: 100%;
+            float: none;
+            li {
+                display: block;
+            }
+        }
+        input.menu:checked ~ ul.menu {
+            display: block;
+        }
+    }
+}
+
+.nav-spacer {margin-top:60px;}
+
+input[type=checkbox].menu {
+    visibility: hidden;
+    margin: 0;
+    width: 0;
+    height: 0;
+    position: absolute;
+    display: inline-block;
+}
+
+#sidemenu_switch ~ aside.sidebar {
+    display: none;
+}
+
+#sidemenu_switch:checked ~ aside.sidebar {
+    display: block;
+}
+
+.sidebar {
+    position: fixed;
+    top:0;
+    left: 0;
+    padding-top: 60px;
+    z-index: 700;
+    height: 100%;
+    width: 400px;
+    max-width: 90%;
+    background: $elem-background;
+    border-right: 1px solid $line-color;
+    overflow-y: auto;
+
+    ul {
+        margin:0;
+        padding: 0;
+        li {
+            display: block;
+            margin:5px;
+            padding: 12px;
+            color: white;
+            background: $color4;
+            cursor: pointer;
+            &:hover {
+                background:  $color0;
+            }
+        }
+
+    }
+}

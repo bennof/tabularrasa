@@ -1,4 +1,4 @@
-/* Tabular Rasa SCSS Application
+/* Tabular Rasa JS PopUp
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,4 +20,22 @@
 ** SOFTWARE.
 */
 
-// # An App Layout
+// create a popup
+export function popup (Data,Time){
+    var T = document.getElementById("popup_area");
+    if (!T) {
+        T = document.createElement('div');
+        T.id = "popup_area";
+        document.body.appendChild(T);
+    }
+    var pop = document.createElement('div');
+    pop.className = "popup";
+    pop.innerHTML = Data;
+    T.appendChild(pop);
+    var f = function(){ T.removeChild(pop); };
+    window.setTimeout(f,Time);
+}
+
+export function error(Header, Desc) {
+    popup('<h1>'+Header+'</h1><p>'+Desc+'</p>', 5000);
+}

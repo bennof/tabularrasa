@@ -1,4 +1,4 @@
-/* Tabular Rasa Typo2 SCSS
+/* Tabular Rasa SCSS Typography
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,146 +20,99 @@
 ** SOFTWARE.
 */
 
-
-/* Used Variables */
-
-// font setup
-$font: sans-serif !default;
-$font-color: #555 !default;
-$font-size: 16px !default;
-
-// font header (default reuse fonts)
-$header-font: $font !default;
-$header-color: $font-color;
-
-// colors (minimal)
-$line-color: #ccc !default;
-$link-color: #03a2f1 !default;
-
-// names
-$name-img: 'Figure' !default;
-$name-table: 'Table' !default;
-$name-code: 'Listing' !default;
-
+// ## Used Variables
+$background1: #ffffff     !default;
+$background2: #f3f3f3     !default;
+$color1:      #cccccc     !default;
+$color1:      #cccccc     !default;
+$color2:      #3366cc     !default;
+$radius:      5px         !default;
+$font0:       sans-serif  !default;
+$font1:       sans-serif  !default;
+$font-size:   12pt        !default; // use points for text
 
 /* Gloabal font settigns */
 html {
-    font-family: $font;
+    font-family: $font0;
     font-size:  $font-size;
     line-height: 1.5em;
-    color: $font-color;
+    color: $color0;
     text-align: justify;
 }
 
-//clear
-main::after,
-footer::after,
-.clear::after { content:""; clear: both; display: table; }
 
-/* Text align */
+
+/* circle shape */
+.circle { border-radius: 50%; }
+
+// ## Alignment
+
+// ### Text
 .left { text-align: left; }
 .right { text-align: right; > * { margin-left:5px; }}
 .center { text-align: center; }
 .justify { text-align: justify; }
 
-/* floats */
+// ### Floats
 .fleft{float: left; padding-right: 5px;}
 .fright{float:right; text-align: right; padding-left:5px;}
 
-/* circle shape */ 
-.circle { border-radius: 50%; }
+// ### Clear
+section::after,
+article::after,
+footer::after,
+header:after,
+.clear::after { content:""; clear: both; display: table; }
 
-/* Header */
-h1{ font-size: 2.0*$font-size; line-height: 2.6*$font-size; color: $header-color; font-weight: lighter; margin: 30px 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid $line-color;  }
-h2{ font-size: 1.8*$font-size; line-height: 2.4*$font-size; color: $header-color; font-weight: normal;  margin: 10px 0; padding-top: 5px;}
-h3{ font-size: 1.5*$font-size; line-height: 1.8*$font-size; color: $header-color; font-weight: lighter; margin: 10px 0; padding-top: 5px;}
-h4{ font-size: 1.2*$font-size; line-height: 1.5*$font-size; color: $header-color; font-weight: bold; font-variant: small-caps; }
-h5{ font-size: 1.0*$font-size; line-height: 1.5*$font-size; color: $header-color; font-weight: bold; }
-h6{ font-size: 0.8*$font-size; line-height: 1.5*$font-size; color: $header-color; font-weight: bold; font-variant: small-caps; }
+// ## Text Elements
 
-/* article */
-article, .article {
-    width: 100%;
-    counter-reset: cimage;   
-    counter-reset: ctable;
-    counter-reset: clisting;    
-    counter-reset: cfnote;   
-    
-    header{
-        position: relative;
-        display: block;
-        width: 100%;
-        font-family: $font;
-        padding-top: 3em;
+// ### Header
+// global settings
+h1,h2,h3,h4,h5,h6 {font-family: $font1; }
 
-        nav, time, address,
-        .path, .tags, .date, .author {
-            width: auto;
-            font-size: 0.8*$font-size;
-            line-height: 1.2em;
-            padding: 0;
-        }
-        nav {position:absolute; top: 0em; left:0em;}
-        address {position:absolute; top: 0em; right:0em;}
-        time {position:absolute; top: 1.5em; right:0em;}
-        nav > *::after {content: ' > ';}
+// special settings
+h1{ font-size: 2.0*$font-size; line-height: 2.6*$font-size; color: $color2; font-weight: lighter; margin: 30px 0 10px 0; padding-bottom: 5px; border-bottom: 1px solid $color2;  }
+h2{ font-size: 1.8*$font-size; line-height: 2.4*$font-size; color: $color5; font-weight: normal;  margin: 10px 0; padding-top: 5px;}
+h3{ font-size: 1.5*$font-size; line-height: 1.8*$font-size; color: $color2; font-weight: lighter; margin-top: 16pt; padding-top: 5px;}
+h4{ font-size: 1.2*$font-size; line-height: 1.5*$font-size; color: $color2; font-weight: bold;    margin-top: 16pt; font-variant: small-caps; }
+h5{ font-size: 1.0*$font-size; line-height: 1.5*$font-size; color: $color2; font-weight: bold;    margin-top: 16pt; }
+h6{ font-size: 0.8*$font-size; line-height: 1.5*$font-size; color: $color2; font-weight: bold;    margin-top: 16pt; font-variant: small-caps; }
 
-        h1, h2 {border:none;}
-        h1{ font-size: 3.2*$font-size; line-height: 1.5em; font-weight: 100;}
-        h2{ font-size: 2.2*$font-size; line-height: 1.5em; font-weight: 200; font-style: italic;}
-    }
-
-    summary{
-        font-style: italic;
-    }
-
-    footer {
-        font-size:  0.8*$font-size;
-        margin-top: 20px
-    }
-}
-
-.index {
-    width: 100%;
-    article, .article {
-        padding: 10px;
-        display: inline-block;
-        header h1 {font-size: 1.4*$font-size;line-height: 1.5em; padding: 0; margin-top:5px;}
-        header h2 {font-size: 1.2*$font-size;line-height: 1.5em; padding: 0; margin-top:0px;}
-    }
-}
-
-/* Text */
+// ### Paragraph
 p {
     margin-bottom: 0.5*$font-size;
 }
 
+// ### Linebreak
 br {
     line-height: 0.5*$font-size;
 }
 
+// ### SVG
 svg {
     margin-bottom: -0.1*$font-size;
-    stroke: $font-color;
+    stroke: $color0;
     display: inline-block;
 }
 
+// ### Links
 a {
     text-decoration: none;
-    color: $link-color;
+    color: $color2;
     font-weight: normal;
     svg {
-        stroke: $link-color;
+        stroke: $color2;
         &:hover {
-            stroke: darken( $link-color, 10% ) !important;
+            stroke: $color3;
         }
     }
     &:hover {
         text-decoration: underline;
-        color: darken( $link-color, 10% ) !important;
+        color: $color3;
     }
 }
 
+// ### Lists
 ul, ol, dl {
     margin: 0.75*$font-size 0;
 }
@@ -173,18 +126,19 @@ dfn {
     font-family: monospace;
 }
 
+// ### Code
 pre {
     white-space: pre-wrap;
-    white-space: -moz-pre-wrap; 
+    white-space: -moz-pre-wrap;
     white-space: -pre-wrap;
-    white-space: -o-pre-wrap; 
+    white-space: -o-pre-wrap;
     word-wrap: break-word;
     margin-bottom: 0.5*$font-size;
     > code {
         padding: 10px;
         display: block;
-        border-top: 1px solid $line-color;
-        border-bottom: 1px solid $line-color;
+        border-top: 1px solid $color1;
+        border-bottom: 1px solid $color1;
     }
 }
 
@@ -198,60 +152,35 @@ figcaption,
     display: block;
 }
 
-figcaption,
+figcaption::before{
+    display: inline;
+    counter-increment: cimage;
+    content: $name-img ' ' counter(cimage) ': ' attr(desc-text);
+}
 figure[desc-text]::after{
     counter-increment: cimage;
-    content: $name-img counter(cimage) ': ' attr(desc-text);
+    content: $name-img ' ' counter(cimage) ': ' attr(desc-text);
 }
 pre[desc-text]::after{
     counter-increment: clisting;
-    content: $name-code counter(clisting)': ' attr(desc-text);
+    content: $name-code ' ' counter(clisting)': ' attr(desc-text);
 }
 table[desc-text]::after{
     counter-increment: ctable;
-    content: $name-table counter(ctable)': ' attr(desc-text);
-}
-
-/* table */
-table {
-    table-layout:fixed;
-    border-collapse: collapse;
-    width: 100%;
-    background-color: inherit;
-    padding: 10px;
-    margin-bottom: 0.5*$font-size;
-    border-top: 1px solid $line-color;
-    
-
-    input[type=text] {
-        margin:0;
-        display:block;
-        height: auto;
-        width: auto;
-        padding: 2px;
-    }
-    th, td {
-        text-align: left;
-        padding: 8px;
-        background-color: inherit;
-    }
-
-    tr:last-child {border-bottom: 1px solid $line-color;}
-
-    td:hover { background-color: #eee; }
-    /*tr:nth-child(even){ background-color: #dcc7aa; }*/
-    //th { border-bottom: 1px solid $line-color;}
+    content: $name-table ' ' counter(ctable)': ' attr(desc-text);
 }
 
 /* Quotes */
 blockquote {
     font-family: serif;
-    border-left: 1px solid $link-color;
+    color: $color2;
+    border-left: 1px solid $color1;
     padding-left: 10px;
     font-style: italic;
     margin-bottom: 0.5*$font-size;
     font-size: 1.2*$font-size;
     .ref {
+        color: $color3;
         display: block;
         text-align: right;
         font-weight: bold;
@@ -267,4 +196,33 @@ a.fn {
     font-size: 0.6*$font-size;
 }
 
+/* table */
+table {
+    table-layout:fixed;
+    border-collapse: collapse;
+    width: 100%;
+    background-color: inherit;
+    padding: 10px;
+    margin-bottom: 0.5*$font-size;
+    border-top: 1px solid $color1;
 
+
+    input[type=text] {
+        margin:0;
+        display:block;
+        height: auto;
+        width: auto;
+        padding: 2px;
+    }
+    th, td {
+        text-align: left;
+        padding: 8px;
+        background-color: inherit;
+    }
+
+    tr:last-child {border-bottom: 1px solid $color1;}
+
+    td:hover { background-color: #eee; }
+    /*tr:nth-child(even){ background-color: #dcc7aa; }*/
+    //th { border-bottom: 1px solid $line-color;}
+}

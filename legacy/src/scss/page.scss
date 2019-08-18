@@ -1,5 +1,5 @@
-/* Tabular Rasa SCSS Application
-** Copyright (c) 2018-2019 Benjamin Benno Falkner
+/* Tabular Rasa Page SCSS
+** Copyright (c) 2018 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -20,4 +20,48 @@
 ** SOFTWARE.
 */
 
-// # An App Layout
+/* Main */
+$page-width: 1000px !default; // defines max width
+
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    max-width: $page-width;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 4px;
+}
+
+body > footer {
+    //text-align: center;
+    font-size: 11px; line-height: 14px;
+    max-width: $page-width;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 15px;
+}
+
+/* column model */
+.one    { width: 8.33% !important; }
+.two    { width: 16.66%!important; }
+.three  { width: 25%!important; }
+.four   { width: 33.33%!important; }
+.five   { width: 41.66%!important; }
+.six    { width: 50%!important; }
+.seven  { width: 58.33%!important; }
+.eight  { width: 66.66%!important; }
+.nine   { width: 75%!important; }
+.ten    { width: 83.33%!important; }
+.eleven { width: 91.66%!important; }
+.twelve { width: 100%!important; }

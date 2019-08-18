@@ -1,4 +1,4 @@
-/* Tabular Rasa SCSS Application
+/* Tabular Rasa JS Index
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,4 +20,10 @@
 ** SOFTWARE.
 */
 
-// # An App Layout
+import * as oauth from "./js/oauth.js"
+import * as o365  from "./js/o365.js"
+import * as table from "./js/table.js"
+import * as popup from "./js/popup.js"
+
+
+console.log("Tis is a test");

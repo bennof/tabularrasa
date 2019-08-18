@@ -1,4 +1,4 @@
-/* Tabular Rasa SCSS Application
+/* Tabular Rasa SCSS Popup
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,4 +20,26 @@
 ** SOFTWARE.
 */
 
-// # An App Layout
+
+// # Creates Popup Messages
+
+// ## Used Variables
+$background1: #ffffff !default;
+$radius:      5px !default;
+
+// ## Style
+#popup_area {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    max-width: 100%;
+
+    .popup {
+        margin: 5px;
+        padding: 10px;
+        display: block;
+        border-radius: $radius;
+        background: rgba(0,0,0,0.8);
+        color: $background1;
+    }
+}

@@ -1,5 +1,5 @@
-/* Tabular Rasa SCSS Application
-** Copyright (c) 2018-2019 Benjamin Benno Falkner
+/* Tabular Rasa App SCSS
+** Copyright (c) 2018 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
 ** of this software and associated documentation files (the "Software"), to deal
@@ -20,4 +20,27 @@
 ** SOFTWARE.
 */
 
-// # An App Layout
+/* Main */
+$page-width: 1000px !default;
+
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 4px;
+}
+
+body > footer {
+    text-align: center;
+}
