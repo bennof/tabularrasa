@@ -5,12 +5,15 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
 	mode: 'development',
-	entry: ['./src/index.js','./src/index.scss'],
+	entry: ['./src/index.js'],
   devtool: 'source-map',
 
 	output: {
 		filename: 'js/tabularrasa.js',
-		path: path.resolve(__dirname, 'example')
+		path: path.resolve(__dirname, 'example'),
+		library: 'tr',
+	  libraryTarget:'umd',
+		globalObject: 'this'
 	},
 
   module: {
@@ -25,7 +28,7 @@ module.exports = {
       },
       { // Html
 				test: /\.(html|htm)$/,
-				use: [{ loader: 'html-loader', options: { attrs: [':data-src']}}]
+				use: [{ loader: 'html-loader'}]
 			},
       { // Images
     		test: /\.(png|jpe?g|gif|svg)$/,

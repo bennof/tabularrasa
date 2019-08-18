@@ -1,4 +1,4 @@
-/* Tabular Rasa JS Index
+/* Tabular Rasa JS URL
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -20,39 +20,35 @@
 ** SOFTWARE.
 */
 
-import './index.scss';
+/*eslint no-unused-vars: ["error", { "args": "none" }]*/
 
-import * as io     from "./js/io.js";
-import * as loader from "./js/loader.js";
-import * as maps   from "./js/maps.js";
-import * as o365   from "./js/o365.js";
-import * as oauth  from "./js/oauth.js";
-import * as pready from "./js/pageready.js";
-import * as popup  from "./js/popup.js";
-import * as table  from "./js/table.js";
-import * as url    from "./js/url.js";
+// scan header
+export function get_http_header_map(Xhttp){
+  var i, Elem, Key, Value, R={}, HL = Xhttp.getAllResponseHeaders().trim().split(/[\r\n]+/);
+  for ( i=0; i<HL.length; i++ ) {
+      Elem = HL[i].split(': ');
+      Key   = Elem.shift();
+      Value = Elem.join(': ');
+      R[Key] = Value;
+  }
+  return R;
+}
 
+export function get_hash_map(URL){
+  var i, Hash = (URL.hash.substr(1)).split("&");
+  for (i=0; i<Hash.length; i++) {
+      R1 = Hash[i].split("=");
+      Res[R1[0]]=R1[1] || R1[0];
+  }
+  return Res;
+}
 
-
-export {
-  io,
-  loader,
-  maps,
-  o365,
-  oauth,
-  pready,
-  popup,
-  table,
-  url
-};
-
-
-
-
-//export default {
-//  oauth: oauth,
-//  o365: o365,
-//  table: table,
-//  popup: popup,
-//  test: test
-//};
+// window.location
+export function get_query_map(){
+  var i, Query = (URL.search.substr(1)).split("&");
+  for (i=0; i<Query.length; i++) {
+      R1 = Query[i].split("=");
+      Res[R1[0]]=R1[1] || R1[0];
+  }
+  return Res;
+}

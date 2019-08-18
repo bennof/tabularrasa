@@ -6,6 +6,53 @@
 </head>
 <body>
 
-<div id="popup_area" />
+<!-- A menu -->
+<nav>
+  <!-- side menu -->
+  <label for="sidemenu_switch">
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none"  stroke-width="4" stroke-linecap="round">
+              <path  d="M 4,8 L 28,8" />
+              <path  d="M 4,16 L 28,16" />
+              <path  d="M 4,24 L 28,24" /  >
+        </g>
+      </svg>
+  </label>
+  <!-- logo -->
+  <a href="#null"><img src="./img/edologo.svg" alt="Tabular Rasa" /></a  >
+  <!-- menu items -->
+  <label for="menu_switch" class="menu fright">
+      <svg viewBox="0 0 12 32" xmlns="http://www.w3.org/2000/svg">
+          <g fill="none"  stroke-width="4" stroke-linecap="round"  >
+            <path  d="M 4,8 L 8,8" />
+              <path  d="M 4,16 L 8,16" />
+              <path  d="M 4,24 L 8,24" />
+          </g>
+      </svg>
+  </label>
+  <input type="checkbox" id="menu_switch" class="menu">
+  <ul class="menu">
+      <li><a href="#null">Arg1</a></li  >
+    <li><a href="#null">Arg1</a></li>
+      <li><a href="#null">Arg1</a></li>
+      <li><a href="#null">Arg1</a></li>
+  </ul>
+</nav>
+
+<!-- Sidebar Menu -->
+<div class="sidebar_container">
+  <input type="checkbox" id="sidemenu_switch" class="menu">
+  <aside class="sidebar blocks">
+    <div><h1>Top 1</h1><p>Some Text</p></div>
+    <div><h1>Top 2</h1><p>Some Text</p></div>
+    <div><h1>Top 3</h1><p>Some Text</p></div>
+  </aside>
+</div>
+
+<!-- A page -->
+
+<!-- An area for popup news -->
+<div id="popup_area"></div>
+
 </body>
 </html>

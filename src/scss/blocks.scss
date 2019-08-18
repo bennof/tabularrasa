@@ -30,7 +30,7 @@ $color1:      #cccccc !default;
 $radius:      5px !default;
 
 // ## Style
-.tr-blocks {
+.blocks {
     background: $background2;
     & > * {
         border-radius: $radius;

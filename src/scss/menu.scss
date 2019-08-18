@@ -67,14 +67,14 @@ body > nav,
         font-weight: normal;
         cursor: pointer;
         svg {
-            stroke: $link-color;
+            stroke: $color2;
             &:hover {
-                stroke: darken( $link-color, 10% ) !important;
+                stroke: $color3;
             }
         }
         &:hover {
             text-decoration: underline;
-            color: darken( $link-color, 10% ) !important;
+            color: $color3;
         }
 
         &.menu {
@@ -133,8 +133,8 @@ input[type=checkbox].menu {
     height: 100%;
     width: 400px;
     max-width: 90%;
-    background: $elem-background;
-    border-right: 1px solid $line-color;
+    background: $background1;
+    border-right: 1px solid $color1;
     overflow-y: auto;
 
     ul {

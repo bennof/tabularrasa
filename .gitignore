@@ -3,3 +3,5 @@
 example
 node_modules
 priv
+package-lock.json
+.DS_Store

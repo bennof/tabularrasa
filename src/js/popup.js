@@ -39,3 +39,15 @@ export function popup (Data,Time){
 export function error(Header, Desc) {
     popup('<h1>'+Header+'</h1><p>'+Desc+'</p>', 5000);
 }
+
+export function warning(Header, Desc) {
+    popup('<h1>'+Header+'</h1><p>'+Desc+'</p>', 5000);
+}
+
+export function info(Header, Desc) {
+    popup('<h1>'+Header+'</h1><p>'+Desc+'</p>', 5000);
+}
+
+export function log(Header, Desc) {
+    popup('<h1>'+Header+'</h1><p>'+Desc+'</p>', 5000);
+}

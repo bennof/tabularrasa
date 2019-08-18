@@ -27,14 +27,14 @@
 **
 */
 
-function map(Fun,List) {
-    var R = {}, i, Keys = Object.keys(List)
-    for (i = 0; i < Keys.length; i++) {
-        R[Keys[i]] = Fun(Keys[i],List[Keys[i]]);
-    }
-    return R;
-}
-
+// function map(Fun,List) {
+//     var R = {}, i, Keys = Object.keys(List)
+//     for (i = 0; i < Keys.length; i++) {
+//         R[Keys[i]] = Fun(Keys[i],List[Keys[i]]);
+//     }
+//     return R;
+// }
+import {map} from "./maps";
 
 // create empty set of login params
 function create_params (){

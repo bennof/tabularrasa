@@ -41,13 +41,14 @@ export function get_group_members(OAuth, Id, Cb) {
     oauth.get(OAuth, "https://graph.microsoft.com/beta/groups/"+Id+"/members", "json" ,[], Cb);
 }
 
-function fold(Fun,Acc,List) {
-    var i, Keys = Object.keys(List)
-    for (i = 0; i < Keys.length; i++) {
-        Acc = Fun(Keys[i],List[Keys[i]],Acc);
-    }
-    return Acc;
-}
+// function fold(Fun,Acc,List) {
+//     var i, Keys = Object.keys(List)
+//     for (i = 0; i < Keys.length; i++) {
+//         Acc = Fun(Keys[i],List[Keys[i]],Acc);
+//     }
+//     return Acc;
+// }
+import {fold} from "./maps.js";
 
 function get_concat (S,D){
     if(S === 200){
