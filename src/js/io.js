@@ -21,28 +21,35 @@
 */
 
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
+import {popup} from "./popup.js";
 
-export function open(Filen,Mime,Cb) {
+export function open(Filen,Mime,Cb,Type) {
   if(Filen == null) { // create dialog
     var FileInput = document.createElement('input');
     FileInput.setAttribute('type','file');
-    FileInput.setAttribute('accept',Mime);
-    FileInput.addEventaddEventListener("change", function(){
+    FileInput.setAttribute('id','testfile');
+    if ( Mime )
+      FileInput.setAttribute('accept',Mime);
+    FileInput.addEventListener('change', function(){
       open(this.input.files,this.mime,this.cb);
     }.bind({input: FileInput, mime: Mime, cb: Cb}), false);
-    if (document.createEvent) {
-      var Event = document.createEvent('MouseEvents');
-      Event.initEvent('click', true, true);
-      FileInput.dispatchEvent(Event);
-    } else {
-      FileInput.click();
-    }
+
+    // if (document.createEvent) {
+    //   console.log("create event");
+    //   var Event = document.createEvent('MouseEvents');
+    //   Event.initEvent('click', true, true);
+    //   FileInput.click();//dispatchEvent(Event);
+    // } else {
+    //   FileInput.click();
+    // }
+    popup(FileInput,10000);
     return;
   }
 
+
   // Read files
-  if(Array.isArray(Files)) {
-    files_read(Files,[],Cb);
+  if(Filen.length) {
+    files_read(Filen,0,Mime,[],Cb);
   } else {
     var Reader = new FileReader();
     Reader.onload = function(){
@@ -51,30 +58,32 @@ export function open(Filen,Mime,Cb) {
     Reader.onerror = function(){
       Cb(404,Reader.error);
     };
-    if(Mime.startsWith('text'))
-      reader.readAsText(F);
+    if(Type == "DataURL")
+      Reader.readAsDataURL(Filen);
     else
-      reader.readAsDataURL(F);
+      Reader.readAsText(Filen);
   }
 }
 
-function files_read(Files,Mime,Res,Cb){
-  var F = Files.shift(), Reader = new FileReader();
+function files_read(Files,i,Mime,Res,Cb,Type){
   // if done
-  if (F == null) {
+  if (Files.length <= i) {
     Cb(200,Res);
     return;
   }
+
+  var F = Files[i], Reader = new FileReader();
   Reader.onload = function(){
-    files_read(this.files,this.mime,this.res.push({src: F, data: Reader.result}),this.cb)
-  }.bind({files: Files, mime: Mime, res: Res, cb: Cb});
+    this.res.push({src: F.name, data: Reader.result});
+    files_read(this.files,this.i+1,this.mime,this.res,this.cb,this.Type)
+  }.bind({files: Files, i:i, mime: Mime, res: Res, cb: Cb, type: Type});
   Reader.onerror = function(){
     Cb(404,{src: F, error: Reader.error, data: Res});
   };
-  if(Mime.startsWith('text'))
-    reader.readAsText(F);
+  if(Type == "DataURL")
+    Reader.readAsDataURL(F);
   else
-    reader.readAsDataURL(F);
+    Reader.readAsText(F);
 }
 
 export function save(Filen, Mime, Data) { // Mime text/csv;charset=utf-8

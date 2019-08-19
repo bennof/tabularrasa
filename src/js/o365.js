@@ -117,7 +117,7 @@ export var users = (function(){
                                     else  // multiple hits
                                         this.cb(300, D.value);
                                 } else {
-                                    S = fold(function(K,V,Acc){return Acc+"startswith("+K+",'"+V+")'+or+"},"",Value).slice(0,-4);
+                                    S = fold(function(K,V,Acc){return Acc+"startswith("+K+",'"+V+"')+or+"},"",Value).slice(0,-4);
                                     oauth.get(this.oauth,
                                         "https://graph.microsoft.com/beta/users?$filter="+S+"&$select=id,displayname",
                                         "json",

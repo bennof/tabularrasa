@@ -37,15 +37,44 @@ export function clear(Tbl) {
 
 export function add_colum(Tbl, Name, Data) {
     Tbl.header.push(Name);
-    var Pos = tbl.header.length -1;
+    var Pos = Tbl.header.length -1;
     for (var i=0;i<Tbl.data.length; i++){
         if(Data && Data[i]) {
-            Tbl.data[i][pos] = Data[i];
+            Tbl.data[i][Pos] = Data[i];
         } else {
-            Tbl.data[i][pos] = null;
+            Tbl.data[i][Pos] = null;
         }
     }
     return Tbl;
+}
+
+export function map(Fun, Tbl){
+  var Data = Tbl.data, i;
+  for (i = 0; i < Data.length; i++) {
+    Fun(Data[i]);
+  }
+}
+
+export function fold(Fun, Acc, Tbl){
+  var Data = Tbl.data, i;
+  for (i = 0; i < Keys.length; i++) {
+    Acc = Fun(Data[i],Acc);
+  }
+  return Acc;
+}
+
+export function filter(Fun,Tbl){
+  var Out = init(Tbl.name+" filter",Tbl.header.slice(0));
+  var Data = Tbl.data, i;
+  for (i = 0; i < Data.length; i++) {
+    if (Fun(Data[i]))
+      Out.data.push(Data[i]);
+  }
+  return Out;
+}
+
+export function get_col(Tbl, Col_Name){
+  return Tbl.header.indexOf(Col_Name);
 }
 
 export function get(Tbl,Row,Col) {
@@ -101,16 +130,18 @@ export function add_obj_array(Tbl,Obj){
     return Tbl;
 }
 
-export function read_csv(Tbl, Text, FS) {
-    if (typeof(Tbl) == String ) {
-        Tbl = init(Tbl);
+export function read_csv(Tbl, Text, FS, No_Header) {
+    if (typeof(Tbl) === "string" ) {
+      Tbl = init(Tbl);
     }
+    console.log(typeof Tbl)
+    console.log(Tbl)
 
-    var Last_Char = "", Field = "", Obj = [""], Col = 0, Row = 0, No_Quote = !0, C, j, First_Row = !0;
-    Tbl.data = [Obj];
+    var Last_Char = "", Field = "", Obj = [""], Col = 0, Row = 0, No_Quote = !0, C, j, First_Row = (No_Header)? 0 : !0;
+    Tbl.data.push(Obj);
 
     for (j = 0; j < Text.length; j++) {
-        C = text[j]; //get current char
+        C = Text[j]; //get current char
         if ("\"" === C) { // if quote
             if (No_Quote && C === Last_Char)
                 Field += C; // if previous was a quote add quote to field string
@@ -127,7 +158,7 @@ export function read_csv(Tbl, Text, FS) {
         }
         else if ("\n" === C && No_Quote) { // if not quoted line end
                 if ("\r" === Last_Char)
-                    field = field.slice(0, -1); //remove carriage return
+                    Field = Field.slice(0, -1); //remove carriage return
                 if (First_Row) {
                     First_Row = !First_Row;
                     Tbl.header[Col] = Field;
@@ -148,6 +179,8 @@ export function read_csv(Tbl, Text, FS) {
     if (Col != 0) {
         Obj[Col] = Field;
     }
+
+    return Tbl;
 }
 
 export function write_csv(Tbl, FS) {

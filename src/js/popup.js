@@ -30,7 +30,10 @@ export function popup (Data,Time){
     }
     var pop = document.createElement('div');
     pop.className = "popup";
-    pop.innerHTML = Data;
+    if (Data instanceof Element || Data instanceof HTMLDocument)
+      pop.appendChild(Data);
+    else
+      pop.innerHTML = Data;
     T.appendChild(pop);
     var f = function(){ T.removeChild(pop); };
     window.setTimeout(f,Time);

@@ -32,7 +32,45 @@ import * as popup  from "./js/popup.js";
 import * as table  from "./js/table.js";
 import * as url    from "./js/url.js";
 
+function login(){
+  var R = oauth.init("SGS");
+  if (!oauth.logged_in(R)){
+    io.open(null,"application/json",function (S,D){
+      console.log(S);
+      if(S===200){
+        oauth.load_cfg(R,JSON.parse(D[0].data));
+        oauth.login(R,"Shell");
+      }
+    });
+  }
 
+  return R;
+};
+
+function run(OAuth){
+  //read file
+  io.open(null,"text/csv",function(S,D){
+    if(S === 200) {
+      // parse
+      var Teacher = table.read_csv("Lehrer",D[0].data,";");
+      document.teacher = Teacher;
+      Teacher = table.add_colum(Teacher,"OfficeID");
+      var Fn = table.get_col(Teacher,"Vorname"), Ln = table.get_col(Teacher,"Nachname"), Oid = table.get_col(Teacher,"OfficeID");
+      console.log(Fn,Ln,Oid)
+      console.log(Teacher)
+      console.log(2)
+      // check
+      table.map(function(Row){
+        console.log(Row[Fn],Row[Ln])
+        o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
+          if(S === 200)
+            this[Oid] = D;
+        }.bind(Row));
+      },Teacher);
+      console.log(3)
+    }
+  });
+}
 
 export {
   io,
@@ -43,16 +81,7 @@ export {
   pready,
   popup,
   table,
-  url
-};
-
-
-
-
-//export default {
-//  oauth: oauth,
-//  o365: o365,
-//  table: table,
-//  popup: popup,
-//  test: test
-//};
+  url,
+  run,
+  login
+}

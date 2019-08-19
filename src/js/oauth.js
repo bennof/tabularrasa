@@ -134,6 +134,10 @@ export function init(Name,Cfg) {
     return Res;
 }
 
+export function logged_in(OAuth){
+  return (OAuth.state === 0 )? true : false;
+}
+
 export function load_cfg(OAuth,Cfg){
     OAuth.login.link = Cfg.link || null;
     OAuth.login.param = Cfg.param || create_params();
