@@ -56,18 +56,18 @@ function run(OAuth){
       document.teacher = Teacher;
       Teacher = table.add_colum(Teacher,"OfficeID");
       var Fn = table.get_col(Teacher,"Vorname"), Ln = table.get_col(Teacher,"Nachname"), Oid = table.get_col(Teacher,"OfficeID");
-      console.log(Fn,Ln,Oid)
-      console.log(Teacher)
-      console.log(2)
+      //console.log(Fn,Ln,Oid)
+      //console.log(Teacher)
+      //console.log(2)
       // check
       table.map(function(Row){
-        console.log(Row[Fn],Row[Ln])
+        //console.log(Row[Fn],Row[Ln])
         o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
           if(S === 200)
             this[Oid] = D;
         }.bind(Row));
       },Teacher);
-      console.log(3)
+      //console.log(3)
     }
   });
 }

@@ -105,7 +105,8 @@ export var users = (function(){
                         else  // multiple hits
                             this.cb(300, D.value);
                     } else { // more fuzzy search
-                        S = fold(function(K,V,Acc){return "startswith("+K+",'"+V+"')+and+"},"",Value).slice(0,-5);
+                        S = fold(function(K,V,Acc){return Acc+"startswith("+K+",'"+V+"')+and+"},"",Value).slice(0,-5);
+                        console.log(S);
                         oauth.get(this.oauth,
                             "https://graph.microsoft.com/beta/users?$filter="+S+"&$select=id,displayname",
                             "json",
@@ -117,22 +118,7 @@ export var users = (function(){
                                     else  // multiple hits
                                         this.cb(300, D.value);
                                 } else {
-                                    S = fold(function(K,V,Acc){return Acc+"startswith("+K+",'"+V+"')+or+"},"",Value).slice(0,-4);
-                                    oauth.get(this.oauth,
-                                        "https://graph.microsoft.com/beta/users?$filter="+S+"&$select=id,displayname",
-                                        "json",
-                                        [],
-                                        function(S,D){
-                                            if( S === 200  && D.value.length > 0){ // results
-                                                if (D.value.length === 1)// one hit
-                                                    this.cb(S,D.value[0].id);
-                                                else  // multiple hits
-                                                    this.cb(300, D.value);
-                                            } else {
-                                                this.cb((S === 200)? 404 : S, D);
-                                            }
-                                        }.bind(this)
-                                    );
+                                    this.cb((S === 200)? 404 : S, D);
                                 }
                             }.bind(this)
                         );
