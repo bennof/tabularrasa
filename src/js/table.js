@@ -73,6 +73,73 @@ export function filter(Fun,Tbl){
   return Out;
 }
 
+export var cmp = {
+  number: function(A,B){return A-B;},
+  string: function(A,B){return A.localeCompare(B);},
+  any: function(A,B){return A.toString().localeCompare(B.toString());}
+};
+
+export function sort(Fun, Colum, Tbl){
+  var Cidx;
+  if (typeof Colum === "string" )
+    Cidx = Tbl.header.indexOf(Colum);
+  else
+    Cidx = Colum;
+  var Cmp = function(A,B){
+    return this.cmp(A[this.idx],B[this.idx]);
+  }
+  Tbl = Tbl.data.sort(Cmp.bind({idx: Cidx, cmp: Fun}));
+  Tbl.sorted = Cidx;
+  return Cidx;
+}
+
+export function search(Fun,Value,Colum,Tbl){
+  var Cidx;
+  if (typeof Colum === "string" )
+    Cidx = Tbl.header.indexOf(Colum);
+  else
+    Cidx = Colum;
+  if( Tbl.sorted && Tbl.sorted == Cidx){//binary binsearch
+    return binsearch(Fun, Value, Cidx, Tbl);
+  } else {
+    var i, Data=Tbl.data;
+    for (i=0; i<Data.length; i++){
+      if(0 == Fun(Data[i],Value)){
+        return i;
+      }
+    }
+  }
+  return -1;
+}
+
+export function binary_search(Fun,Value,Colum,Tbl){
+  var Cidx;
+  if (typeof Colum === "string" )
+    Cidx = Tbl.header.indexOf(Colum);
+  else
+    Cidx = Colum;
+  if (!Tbl.sorted || Tbl.sorted != Cidx)
+    Tbl.sort(Fun,Colum,Tbl);
+  return binsearch(Fun, Value, Cidx, Tbl);
+}
+
+function binsearch(Fun, Value, Cidx, Tbl){
+  var Left = 0, Right = Tbl.data.length - 1, Mid, R, Data = Tbl.data;
+  while (Left <= Right) { // Interval
+    Mid = Left + ((Right - Left) / 2); // half interval
+    R = Fun(Value,Data[Mid]);
+    if (R == 0) // success
+      return Mid;
+    else
+      if (R < 0) // lower interval
+        Right = Mid - 1;
+      else // higher interval
+        Left = Mid + 1;
+  }
+  return -1;
+}
+
+
 export function get_col(Tbl, Col_Name){
   return Tbl.header.indexOf(Col_Name);
 }
