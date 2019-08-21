@@ -24,8 +24,8 @@
     "build": "webpack --mode production --output-path .",
     "dev": "webpack-dev-server --mode development --port 8080 --open",
     "build-dev": "webpack",
-    "clean": "rm -rf example/*",
-    "clean-all": "rm -rf example node_modules"
+    "clean": "rm -rf example package-lock.json",
+    "clean-all": "rm -rf example node_modules package-lock.json"
   },
   "repository": {
     "type": "git",

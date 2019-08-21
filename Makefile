@@ -1,10 +1,18 @@
 # Tabular Rasa Makefile
-# using node.js.mk
 
-NPM_DEPS=
+all: build
 
+clean:
+	npm clean
 
+clean-all:
+	npm run clean-all
 
+build: deps
+	npm run build
 
+dev: deps
+	npm run dev
 
-include node.js.mk
+deps:
+	npm install

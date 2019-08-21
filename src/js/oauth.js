@@ -139,9 +139,23 @@ export function logged_in(OAuth){
 }
 
 export function load_cfg(OAuth,Cfg){
-    OAuth.login.link = Cfg.link || null;
-    OAuth.login.param = Cfg.param || create_params();
-    return OAuth;
+  OAuth.login.link = Cfg.link || null;
+  OAuth.login.param = Cfg.param || create_params();
+  return OAuth;
+}
+
+export function load_cfg_file(OAuth,File,Cb){
+  var Reader = new FileReader();
+  Reader.oauth = OAuth;
+  Reader.cb = Cb;
+  Reader.onload = function(Event) {
+      var Cfg = JSON.parse(Event.target.result);
+      this.cb(200,load_cfg(this.oauth,Cfg));
+  };
+  Reader.onerror = function(Event) {
+      this.cb(404,Event.target.error.code);
+  };
+  Reader.readAsText(File);
 }
 
 export function login(OAuth,State){

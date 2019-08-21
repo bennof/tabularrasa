@@ -41,7 +41,7 @@ export function html(Url,Target) {
 function exec_js(Elem){
   var elem = Elem.querySelectorAll('SCRIPT');
   elem.forEach(function(e) {
-    eval(e.innerText);
+    eval.call(window,e.innerText);
   });
 }
 
