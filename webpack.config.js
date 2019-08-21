@@ -3,6 +3,21 @@ const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+const Components = [
+	"components/menu.html",
+	"components/sidebar.html"
+];
+
+function gen_components(){
+	return Components.map(Value => {
+		return new HtmlWebPackPlugin({
+			filename: Value,
+			template: './src/'+Value,
+			inject: false
+		});
+	});
+}
+
 module.exports = {
 	mode: 'development',
 	entry: ['./src/index.js'],
@@ -41,14 +56,16 @@ module.exports = {
     ]
   },
 
-  plugins: [
-    new HtmlWebPackPlugin({
-      template: "./src/index.html",
-      filename: "index.html",
-    }),
-    new MiniCssExtractPlugin({
-      filename: "css/[name].css",
-      chunkFilename: "[id].css",
-    })
-  ]
+  plugins:
+		gen_components().concat([
+    	new HtmlWebPackPlugin({
+      	template: "./src/index.html",
+      	filename: "index.html",
+		 		inject: "head"
+    	}),
+    	new MiniCssExtractPlugin({
+      	filename: "css/[name].css",
+      	chunkFilename: "[id].css",
+    	})
+  	])
 }

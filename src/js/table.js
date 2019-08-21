@@ -1,4 +1,4 @@
-/* Tabular Rasa JS PopUp
+/* Tabular Rasa JS Table
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy

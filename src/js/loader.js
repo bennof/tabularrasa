@@ -76,11 +76,24 @@ export function router(Tag){ // Tag: 'html-router'
 };
 
 // load data once
-export function html_src_tag(Tag) {
-  var i, E, Elems = document.querySelectorAll('['+Tag+']');
+export function tag(Tag) {
+  var i, Elem, Url, Elems = document.querySelectorAll('['+Tag+']');
   for ( i=0; i<Elems.length; i++ ){
     Elem = Elems[i];
     Url = Elem.getAttribute(Tag);
     html(Url,Elem);
   }
 };
+
+// Create clean code
+var EntityMap = {"&": "&amp;","<": "&lt;",">": "&gt;",'"': '&quot;',"'": '&#39;',"/": '&#x2F;'};
+function escape_html(string) { return String(string).replace(/[&<>"'\/]/g, function (s) { return EntityMap[s]; }); };
+var clean_code = function (Target) {
+    var i, Elem, New, CodeElems = Target.querySelectorAll('[clean-code]');
+    for(i=0; i<CodeElems.length; i++) {
+      Elem = CodeElems[i];
+      New = escape_html(Elem.innerHTML)
+      Elem.innerHTML = New;
+    }
+};
+clean_code(document);
