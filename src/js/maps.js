@@ -23,6 +23,12 @@
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 
 /**
+*  adds some map functions from functional laguages
+*  helper functions
+*/
+
+
+/**
 * Fold function for maps / Objects
 * @param {Function} Fun(Key,Value,Acc) -> Acc
 * @param {Object} Acc Accumulated Value

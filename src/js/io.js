@@ -86,6 +86,14 @@ function files_read(Files,i,Mime,Res,Cb,Type){
     Reader.readAsText(F);
 }
 
+
+
+/**
+* save file as download
+* @param Filen Filename
+* @param Mime  Mimetype
+* @param Data  data string or blob
+**/
 export function save(Filen, Mime, Data) { // Mime text/csv;charset=utf-8
   var FileLink = document.createElement('a');
   if (Mime.startsWith('text'))

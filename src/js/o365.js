@@ -134,11 +134,15 @@ export var teams = (function(){
     return {
         create: function (OAuth, Settings, Cb){
             var Conf ={
-                "template@odata.bind": "https://graph.microsoft.com/beta/teamsTemplates('"+ Settings.template || "standard" +"')",
+                "template@odata.bind": "https://graph.microsoft.com/beta/teamsTemplates('"+ (Settings.template || "standard") +"')",
                 displayName: Settings.name,
                 description: Settings.desc || "Auto Gen",
                 memberSettings: {
-                    allowCreateUpdateChannels: false
+                    allowCreateUpdateChannels: false,
+                    allowDeleteChannels: false,
+                    allowAddRemoveApps: false,
+                    allowCreateUpdateRemoveTabs: false,
+                    allowCreateUpdateRemoveConnectors: false
                 },
                 messagingSettings: {
                     allowUserEditMessages: true,
@@ -149,6 +153,12 @@ export var teams = (function(){
                     giphyContentRating: "strict"
                 }
             };
+            if(Settings.owners) {
+              var i,O = [];
+              for(i=0;i<Settings.owners.length;i++)
+                O.push("https://graph.microsoft.com/beta/users('"+Settings.owners[i]+"')");
+              Conf["owners@odata.bind"] = O;
+            }
             teams.get_gid(OAuth,Settings.name, function(S,D){
                 if( S != 200 ){
                     oauth.post(this.oauth,
@@ -158,7 +168,8 @@ export var teams = (function(){
                         JSON.stringify(this.conf),
                         function(S,D,H){
                             if(S === 202) {
-                                this.cb(S,H["Content-Location"].splice(8));
+                                var Re = /(?:')([^']*)/;
+                                this.cb(S,Re.exec(H.location)[1]);
                             } else
                                 this.cb(S,D);
                         }.bind(this));
@@ -169,7 +180,7 @@ export var teams = (function(){
 
         get_gid: function (OAuth, Gid, Cb) {
             teams.get(OAuth,Gid,function(S,D){
-                    if(S === 200 && D.value.length === 1 && D.value[0].id === Gid) { // it is a valid gid
+                    if(S === 200 && D && D.value.length === 1 && D.value[0].id === Gid) { // it is a valid gid
                         this.cb(S,Gid);
                     } else { // try search
                         oauth.get(this.oauth,
@@ -198,7 +209,7 @@ export var teams = (function(){
         //get_:
         get: function (OAuth, Gid, Cb) {
             oauth.get(OAuth,"https://graph.microsoft.com/beta/groups/"+Gid+"/?$select=id,displayname",
-                "json",[],CB);
+                "json",[],Cb);
         },
         add_member: function (OAuth, Gid, Uid, Cb){
             oauth.post(OAuth,

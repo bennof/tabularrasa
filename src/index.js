@@ -32,20 +32,6 @@ import * as popup  from "./js/popup.js";
 import * as table  from "./js/table.js";
 import * as url    from "./js/url.js";
 
-function login(){
-  var R = oauth.init("SGS");
-  if (!oauth.logged_in(R)){
-    io.open(null,"application/json",function (S,D){
-      console.log(S);
-      if(S===200){
-        oauth.load_cfg(R,JSON.parse(D[0].data));
-        oauth.login(R,"Shell");
-      }
-    });
-  }
-
-  return R;
-};
 
 function run(OAuth){
   //read file
@@ -56,21 +42,57 @@ function run(OAuth){
       document.teacher = Teacher;
       Teacher = table.add_colum(Teacher,"OfficeID");
       var Fn = table.get_col(Teacher,"Vorname"), Ln = table.get_col(Teacher,"Nachname"), Oid = table.get_col(Teacher,"OfficeID");
-      //console.log(Fn,Ln,Oid)
-      //console.log(Teacher)
-      //console.log(2)
       // check
+
       table.map(function(Row){
         //console.log(Row[Fn],Row[Ln])
         o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
-          if(S === 200)
-            this[Oid] = D;
+          if(S === 200) this[Oid] = D;
         }.bind(Row));
+        return Row;
       },Teacher);
       //console.log(3)
     }
   });
 }
+
+function loadCSV(Name) {
+  io.open(null,"text/csv",function(S,D){
+    if(S === 200) {
+      window[Name] = table.read_csv(Name,D[0].data,";");
+    }
+    else
+      console.log(S,D);
+  });
+}
+
+function saveCSV(Filen,Table){
+  save(Filen, "text/csv", table.write_csv(Table,";"));
+}
+
+function getOfficeID(Tbl,OAuth){
+  Tbl = table.add_colum(Tbl,"OfficeID");
+  var Fn = table.get_col(Tbl,"Vorname"), Ln = table.get_col(Tbl,"Nachname"), Oid = table.get_col(Tbl,"OfficeID");
+  table.map(function(Row){
+    o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
+      if(S === 200) this[Oid] = D;
+      else console.log(S,D);
+    }.bind(Row));
+    return Row;
+  },Tbl);
+}
+
+function create_classes(OAuth){
+
+}
+
+function fill_classes(OAuth){
+
+}
+
+
+
+
 
 export {
   io,
@@ -82,6 +104,6 @@ export {
   popup,
   table,
   url,
-  run,
-  login
+  loadCSV,
+  getOfficeID
 }

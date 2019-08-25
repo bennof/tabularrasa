@@ -21,19 +21,84 @@
 */
 
 
+/// TODO:
+/// unify
+/// comments
+///
 
+/// unify
+///
+
+
+/**
+*  initialize a new table
+*  @param {String} Name name of the table
+*  @param {Array} [Header] array of colum names
+*  @return {Table} a new table object
+*/
 export function init(Name,Header) {
     return {
+        /**
+        * not used (will be used for async operations)
+        * @type {Integer}
+        */
+        state: 0,
+        /**
+        * name of the tabel
+        * @type {String}
+        */
         name: Name,
+        /**
+        * array[Colum Index] stores colum names
+        * @type {Array}
+        */
         header: Header || [],
-        data: []
+        /**
+        * 2 dim array[Row Index][Colum Index] to store data (row major)
+        * @type {Array}
+        */
+        data: [],
+        /**
+        * index to determin sorting colum; negativ values intent no sorting
+        * @type {Integer}
+        */
+        sorted: -1
     };
 }
 
+/**
+* clear data of a table (in-place)
+* @param {Table} Tbl table to be cleared
+* @return {Table} reference of input table
+*/
 export function clear(Tbl) {
     Tbl.data = [];
     return Tbl;
 }
+
+/**
+* predefined compare functions
+* @type {Array}
+*/
+export var cmp = {
+  /**
+  * compare numbers
+  * @type {Function}
+  */
+  number: function(A,B){return A-B;},
+  /**
+  * compare strings (local)
+  * @type {Function}
+  */
+  string: function(A,B){return A.localeCompare(B);},
+  /**
+  * compare anything using toString()
+  * @type {Function}
+  */
+  any: function(A,B){return A.toString().localeCompare(B.toString());}
+};
+
+
 
 export function add_colum(Tbl, Name, Data) {
     Tbl.header.push(Name);
@@ -51,7 +116,24 @@ export function add_colum(Tbl, Name, Data) {
 export function map(Fun, Tbl){
   var Data = Tbl.data, i;
   for (i = 0; i < Data.length; i++) {
-    Fun(Data[i]);
+    Data[i] = Fun(Data[i],i);
+  }
+}
+
+function amap(Fun,Arr){
+  var i, R = [];
+  for (i=0;i<Arr.length;i++)
+    R[i] = Fun(Arr[i],i);
+  return R;
+}
+
+export function map3(Fun,Inputs,Tbl){
+  var Data = Tbl.data, i, B,
+    In = amap(function(D){
+      return (typeof D == "string") ? get_col(Tbl,D) : D; },Inputs);
+  for (i = 0; i < Data.length; i++) {
+    B = amap( function(I){return this[I];}.bind(Data[i]),In);
+    Data[i] = Fun.apply(null,[Data[i]].concat(B));
   }
 }
 
@@ -59,6 +141,18 @@ export function fold(Fun, Acc, Tbl){
   var Data = Tbl.data, i;
   for (i = 0; i < Keys.length; i++) {
     Acc = Fun(Data[i],Acc);
+  }
+  return Acc;
+}
+
+export function fold4(Fun,Acc,Inputs,Tbl) {
+  var Data = Tbl.data, i, B,
+    In = amap(function(D){
+      return (typeof D == "string") ? Tbl.header.indexOf(D) : D; },Inputs);
+  for (i = 0; i < Data.length; i++) {
+    B = amap( function(I){return this[I];}.bind(Data),In);
+    B.push(Acc);
+    Acc = Fun.apply(null,B);
   }
   return Acc;
 }
@@ -73,24 +167,39 @@ export function filter(Fun,Tbl){
   return Out;
 }
 
-export var cmp = {
-  number: function(A,B){return A-B;},
-  string: function(A,B){return A.localeCompare(B);},
-  any: function(A,B){return A.toString().localeCompare(B.toString());}
-};
+export function reduce(Fun,Colum,Tbl){
+  var Cidx = (typeof Colum === "string" ) ? Tbl.header.indexOf(Colum) : Colum;
+  if (!Tbl.sorted || Tbl.sorted != Cidx)
+    sort(Fun,Cidx,Tbl);
+  var Data = Tbl.data, i;
+  var Last=Data[0][Cidx], Out = init(Tbl.name+" filter",Tbl.header.slice(0));
+  Out.data.push(Data[0]);
+  for (i = 1; i < Data.length; i++) {
+    if (!Fun(Data[i],Last))
+      Out.data.push(Data[i]);
+    Last = Data[i];
+  }
+  return Out;
+}
+
+
 
 export function sort(Fun, Colum, Tbl){
-  var Cidx;
-  if (typeof Colum === "string" )
-    Cidx = Tbl.header.indexOf(Colum);
-  else
-    Cidx = Colum;
+  var Cidx = (typeof Colum === "string" ) ? Tbl.header.indexOf(Colum) : Colum;
   var Cmp = function(A,B){
     return this.cmp(A[this.idx],B[this.idx]);
   }
-  Tbl = Tbl.data.sort(Cmp.bind({idx: Cidx, cmp: Fun}));
+  Tbl.data = Tbl.data.sort(Cmp.bind({idx: Cidx, cmp: Fun}));
   Tbl.sorted = Cidx;
   return Cidx;
+}
+
+export function search_and_get(Fun,Value,Colum,Key,Tbl){
+  var Idx = search(Fun,Value,Colum,Tbl);
+  if (Idx > 0) {
+    var Cidx = (typeof Colum === "string" ) ? Tbl.header.indexOf(Key) : Key;
+    return Tbl.data[Idx][Cidx];
+  }
 }
 
 export function search(Fun,Value,Colum,Tbl){
@@ -104,7 +213,7 @@ export function search(Fun,Value,Colum,Tbl){
   } else {
     var i, Data=Tbl.data;
     for (i=0; i<Data.length; i++){
-      if(0 == Fun(Data[i],Value)){
+      if(0 == Fun(Data[i][Cidx],Value)){
         return i;
       }
     }
@@ -113,13 +222,9 @@ export function search(Fun,Value,Colum,Tbl){
 }
 
 export function binary_search(Fun,Value,Colum,Tbl){
-  var Cidx;
-  if (typeof Colum === "string" )
-    Cidx = Tbl.header.indexOf(Colum);
-  else
-    Cidx = Colum;
+  var Cidx = (typeof Colum === "string" ) ? Tbl.header.indexOf(Colum) : Colum;
   if (!Tbl.sorted || Tbl.sorted != Cidx)
-    Tbl.sort(Fun,Colum,Tbl);
+    sort(Fun,Cidx,Tbl);
   return binsearch(Fun, Value, Cidx, Tbl);
 }
 
@@ -127,7 +232,8 @@ function binsearch(Fun, Value, Cidx, Tbl){
   var Left = 0, Right = Tbl.data.length - 1, Mid, R, Data = Tbl.data;
   while (Left <= Right) { // Interval
     Mid = Left + ((Right - Left) / 2); // half interval
-    R = Fun(Value,Data[Mid]);
+    console.log(Value,Data[Mid]);
+    R = Fun(Value,Data[Mid][Cidx]);
     if (R == 0) // success
       return Mid;
     else
@@ -201,8 +307,6 @@ export function read_csv(Tbl, Text, FS, No_Header) {
     if (typeof(Tbl) === "string" ) {
       Tbl = init(Tbl);
     }
-    console.log(typeof Tbl)
-    console.log(Tbl)
 
     var Last_Char = "", Field = "", Obj = [""], Col = 0, Row = 0, No_Quote = !0, C, j, First_Row = (No_Header)? 0 : !0;
     Tbl.data.push(Obj);
@@ -246,6 +350,8 @@ export function read_csv(Tbl, Text, FS, No_Header) {
     if (Col != 0) {
         Obj[Col] = Field;
     }
+    if (Obj.length != Tbl.header.length)
+      Tbl.data.pop();
 
     return Tbl;
 }
