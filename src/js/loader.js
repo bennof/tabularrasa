@@ -20,7 +20,13 @@
 ** SOFTWARE.
 */
 
-import {get_hash_map} from "./url.js";
+/**
+* Tabular Rasa
+* @module tr/loader
+*/
+
+
+import {hash_map} from "./url.js";
 
 // load json from url and pass to callback
 export function json(Url, Cb) {
@@ -63,13 +69,13 @@ export function data(Url,Cb) {
 
 export function router(Tag){ // Tag: 'html-router'
   var Elem = document.querySelector('['+Tag+']');
-  var Map = get_hash_map(window.location);
+  var Map = hash_map(window.location);
   var Src = (Map[Tag])? Map[Tag]+".html" : Elem.getAttribute(Tag);
   // load default
   html(SRC,Elem);
   // listen for changes
   window.onhashchange = function () {
-    var Map = get_hash_map(window.location);
+    var Map = hash_map(window.location);
     var Src = (Map[Tag])? Map[Tag]+".html" : Elem.getAttribute(Tag);
     html(Src,Elem);
   };

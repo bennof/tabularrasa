@@ -20,6 +20,11 @@
 ** SOFTWARE.
 */
 
+/**
+* Tabular Rasa
+* @module tr/popup
+*/
+
 // create a popup
 export function popup (Data,Time){
     var T = document.getElementById("popup_area");

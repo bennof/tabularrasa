@@ -20,11 +20,17 @@
 ** SOFTWARE.
 */
 
+/**
+* Tabular Rasa
+* @module tr
+*/
+
 import './index.scss';
 
 import * as io     from "./js/io.js";
 import * as loader from "./js/loader.js";
 import * as maps   from "./js/maps.js";
+import * as net    from "./js/net.js"
 import * as o365   from "./js/o365.js";
 import * as oauth  from "./js/oauth.js";
 import * as pready from "./js/pageready.js";
@@ -56,7 +62,11 @@ function run(OAuth){
   });
 }
 
-function loadCSV(Name) {
+/**
+* Load CSV
+* @param {String} Name name of the loaded table
+*/
+export function loadCSV(Name) {
   io.open(null,"text/csv",function(S,D){
     if(S === 200) {
       window[Name] = table.read_csv(Name,D[0].data,";");
@@ -66,7 +76,7 @@ function loadCSV(Name) {
   });
 }
 
-function saveCSV(Filen,Table){
+export function saveCSV(Filen,Table){
   save(Filen, "text/csv", table.write_csv(Table,";"));
 }
 
@@ -98,12 +108,11 @@ export {
   io,
   loader,
   maps,
+  net,
   o365,
   oauth,
   pready,
   popup,
   table,
-  url,
-  loadCSV,
-  getOfficeID
+  url
 }

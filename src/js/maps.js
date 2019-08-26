@@ -25,6 +25,7 @@
 /**
 *  adds some map functions from functional laguages
 *  helper functions
+* @module tr/maps
 */
 
 

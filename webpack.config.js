@@ -3,6 +3,7 @@ const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
+
 const Components = [
 	"components/menu.html",
 	"components/sidebar.html"

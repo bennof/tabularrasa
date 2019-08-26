@@ -9,7 +9,7 @@
   <div>
     <h1>Login</h1>
     <div id="login">
-      <button onclick="tr.oauth.login(OAuth,'first_id')">Login</button>
+      <button onclick="tr.net.login(OAuth,'first_id')">Login</button>
       <input id="load_oauth_cfg" type="file" style="display: none" onchange="load_cfg_file()" />
       <button onclick="document.getElementById('load_oauth_cfg').click();">Load Config</button>
     </div>
@@ -17,22 +17,29 @@
       <img id="login_user_img" class="circle four">
       <p id="login_user_name"></p>
       <p id="login_user_mail"></p>
+      <button onclick="tr.net.refresh(OAuth);">Refresh</button>
       <button onclick="window.location.href = '/';">Logout</button>
     </div>
     <script defer>
-      var OAuth = tr.oauth.init("O365");
+      var OAuth = tr.net.init("O365");
 
       function load_cfg_file() {
         var File = document.getElementById("load_oauth_cfg").files[0];
         if (File) {
-          tr.oauth.load_cfg_file(OAuth,File,function(S,D){
-            if(S!=200)
+          tr.io.read(function(S,D){
+            if(S==200)
+              OAuth = tr.net.config(OAuth,D);
+            else
               tr.popup.error("Loading OAuth Config",D);
-          });
+          },File,OAuth);
+          //tr.oauth.load_cfg_file(OAuth,File,function(S,D){
+          //  if(S!=200)
+          //    tr.popup.error("Loading OAuth Config",D);
+          //});
         }
       }
 
-      if(tr.oauth.logged_in(OAuth)){
+      if(tr.net.logged_in(OAuth)){
         document.getElementById("login").style.display = "none";
         document.getElementById("loggedin").style.display = "block";
         document.getElementById("login_user_name").innerHTML = OAuth.id.name;

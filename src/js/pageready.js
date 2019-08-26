@@ -20,6 +20,11 @@
 ** SOFTWARE.
 */
 
+/**
+* Tabular Rasa
+* @module tr/pageready
+*/
+
 var ReadyFired = false;
 var ReadyList = [];
 var ReadyEventHandlersInstalled = false;

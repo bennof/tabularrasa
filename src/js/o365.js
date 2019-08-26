@@ -20,6 +20,11 @@
 ** SOFTWARE.
 */
 
+/**
+* Tabular Rasa
+* @module tr/o365
+*/
+
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 
 import * as oauth from './oauth.js'

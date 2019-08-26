@@ -20,6 +20,10 @@
 ** SOFTWARE.
 */
 
+/**
+* Tabular Rasa
+* @module tr/table
+*/
 
 /// TODO:
 /// unify
@@ -37,33 +41,33 @@
 *  @return {Table} a new table object
 */
 export function init(Name,Header) {
-    return {
-        /**
-        * not used (will be used for async operations)
-        * @type {Integer}
-        */
-        state: 0,
-        /**
-        * name of the tabel
-        * @type {String}
-        */
-        name: Name,
-        /**
-        * array[Colum Index] stores colum names
-        * @type {Array}
-        */
-        header: Header || [],
-        /**
-        * 2 dim array[Row Index][Colum Index] to store data (row major)
-        * @type {Array}
-        */
-        data: [],
-        /**
-        * index to determin sorting colum; negativ values intent no sorting
-        * @type {Integer}
-        */
-        sorted: -1
-    };
+  return {
+    /**
+    * not used (will be used for async operations)
+    * @type {Integer}
+    */
+    state: 0,
+    /**
+    * name of the tabel
+    * @type {String}
+    */
+    name: Name,
+    /**
+    * array[Colum Index] stores colum names
+    * @type {Array}
+    */
+    header: Header || [],
+    /**
+    * 2 dim array[Row Index][Colum Index] to store data (row major)
+    * @type {Array}
+    */
+    data: [],
+    /**
+    * index to determin sorting colum; negativ values intent no sorting
+    * @type {Integer}
+    */
+    sorted: -1
+  };
 }
 
 /**
@@ -172,12 +176,12 @@ export function reduce(Fun,Colum,Tbl){
   if (!Tbl.sorted || Tbl.sorted != Cidx)
     sort(Fun,Cidx,Tbl);
   var Data = Tbl.data, i;
-  var Last=Data[0][Cidx], Out = init(Tbl.name+" filter",Tbl.header.slice(0));
+  var Last=Data[0][Cidx], Out = init(Tbl.name+" reduce "+Colum,Tbl.header.slice(0));
   Out.data.push(Data[0]);
   for (i = 1; i < Data.length; i++) {
-    if (!Fun(Data[i],Last))
+    if (0 != Fun(Data[i][Cidx],Last))
       Out.data.push(Data[i]);
-    Last = Data[i];
+    Last = Data[i][Cidx];
   }
   return Out;
 }

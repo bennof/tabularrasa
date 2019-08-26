@@ -20,10 +20,15 @@
 ** SOFTWARE.
 */
 
+/**
+* Tabular Rasa
+* @module tr/url
+*/
+
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
 
 // scan header
-export function get_http_header_map(Xhttp){
+export function header_map(Xhttp){
   var i, Elem, Key, Value, R={}, HL = Xhttp.getAllResponseHeaders().trim().split(/[\r\n]+/);
   for ( i=0; i<HL.length; i++ ) {
       Elem = HL[i].split(': ');
@@ -34,18 +39,18 @@ export function get_http_header_map(Xhttp){
   return R;
 }
 
-export function get_hash_map(URL){
-  var i, Hash = (URL.hash.substr(1)).split("&");
+export function hash_map(URL){
+  var i, R1, Res={}, Hash = (URL.hash.substr(1)).split("&");
   for (i=0; i<Hash.length; i++) {
       R1 = Hash[i].split("=");
-      Res[R1[0]]=R1[1] || R1[0];
+      Res[R1[0]]=decodeURIComponent(R1[1]) || R1[0];
   }
   return Res;
 }
 
 // window.location
-export function get_query_map(){
-  var i, Query = (URL.search.substr(1)).split("&");
+export function query_map(){
+  var i, R1, Res={}, Query = (URL.search.substr(1)).split("&");
   for (i=0; i<Query.length; i++) {
       R1 = Query[i].split("=");
       Res[R1[0]]=R1[1] || R1[0];
