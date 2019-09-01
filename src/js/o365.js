@@ -78,6 +78,9 @@ export var users = (function(){
     return {
         //create: function (OAuth, Cb){},
         //remove: function (OAuth, Cb){},
+        get: function(OAuth, Id, Cb){
+          oauth.get(OAuth, "https://graph.microsoft.com/beta/"+Id, "json" ,[], Cb);
+        },
         list:   function (OAuth, Cb){
             oauth.get(OAuth,
                 "https://graph.microsoft.com/beta/users/?$select=id,displayName,givenName,surname,mail",
@@ -166,6 +169,7 @@ export var teams = (function(){
             }
             teams.get_gid(OAuth,Settings.name, function(S,D){
                 if( S != 200 ){
+                    console.log("Create Team: "+Settings.name)
                     oauth.post(this.oauth,
                         "https://graph.microsoft.com/beta/teams",
                         "",
@@ -265,3 +269,105 @@ export var teams = (function(){
         }
     };
 })();
+
+
+
+
+export var mail = (function(){
+  return {
+    send: function (Conn,Recipient,Subject,Body,Attachments){
+      // basic Mail
+      var Mail = { message: {
+        subject: Subject,
+        importance: "High",
+        body:{
+          contentType:"Text",
+          content: Body
+        },
+        toRecipients: [],
+        attachments: []
+      }};
+      // add recipients
+      if (typeof Recipient == "string")
+        Mail.message.toRecipients.push({ emailAddress: { address: Recipient }})
+      else
+        for(var i=0; i<Recipient.length; i++)
+          Mail.message.toRecipients.push({ emailAddress: { address: Recipient[i] }})
+
+
+      // add Attachments
+      if (Attachments) {
+        if(typeof Attachments == "string")
+          Mail.message.attachments.push({
+            "@odata.type": "microsoft.graph.fileAttachment",
+            name: Attachments.name,
+            contentType: Attachments.mime,
+            contentBytes: atob(toUTF8(Attachments.body))//base64
+          });
+        else
+          for(var i=0; i<Attachments.length; i++)
+            Mail.message.attachments.push({
+              "@odata.type": "microsoft.graph.fileAttachment",
+              name: Attachments[i].name,
+              contentType: Attachments[i].mime,
+              contentBytes: base64_enc(toUTF8(Attachments[i].body))//base64
+            })
+
+      }
+      console.log(Mail)
+      //send
+      oauth.post(OAuth,
+          "https://graph.microsoft.com/beta/me/sendMail",
+          "",
+          {"Content-Type": "application/json"},
+          JSON.stringify(Mail),function(S,D){console.log(S);console.log(D)});
+    }
+  };
+})();
+
+
+const Base64_enc_map = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
+export function base64_enc(Input){
+  var i=0, Chr1, Chr2, Chr3, Enc1,Enc2, Enc3, Enc4, R = "";
+  while (i < Input.length) {
+    Chr1 = Input[i++];
+    Chr2 = Input[i++];
+    Chr3 = Input[i++];
+
+    Enc1 = Chr1 >> 2;
+    Enc2 = ((Chr1 & 3) << 4) | (Chr2 >> 4);
+    Enc3 = ((Chr2 & 15) << 2) | (Chr3 >> 6);
+    Enc4 = Chr3 & 63;
+
+    if (isNaN(Chr2))
+      Enc3 = Enc4 = 64;
+    else if (isNaN(Chr3))
+      Enc4 = 64;
+    R = R +
+      Base64_enc_map.charAt(Enc1) +
+      Base64_enc_map.charAt(Enc2) +
+      Base64_enc_map.charAt(Enc3) +
+      Base64_enc_map.charAt(Enc4);
+
+  }
+  return R;
+}
+
+export function toUTF8(String) {
+  var i,C, R = []; // unknown expected length
+  for (i=0; i< String.length; i++) { // loop string chars
+    var C = String.charCodeAt(i);
+    if (C < 0x80)
+      R.push(C);
+    else if (C < 0x800)
+      R.push(0xc0 | (C >> 6), 0x80 | (C & 0x3f));
+    else if (C < 0xd800 || C >= 0xe000)
+      R.push(0xe0 | (C >> 12), 0x80 | ((C>>6) & 0x3f), 0x80 | (C & 0x3f));
+    else {
+        i++;
+        C = ((C&0x3ff)<<10)|(String.charCodeAt(i)&0x3ff);
+        R.push(0xf0 | (C >>18), 0x80 | ((C>>12) & 0x3f), 0x80 | ((C>>6) & 0x3f), 0x80 | (C & 0x3f));
+    }
+  }
+  return R;
+}

@@ -152,21 +152,44 @@ export function fold(Fun, Acc, Tbl){
 export function fold4(Fun,Acc,Inputs,Tbl) {
   var Data = Tbl.data, i, B,
     In = amap(function(D){
-      return (typeof D == "string") ? Tbl.header.indexOf(D) : D; },Inputs);
+      return (typeof D == "string") ? get_col(Tbl,D) : D; },Inputs);
   for (i = 0; i < Data.length; i++) {
-    B = amap( function(I){return this[I];}.bind(Data),In);
+    B = amap( function(I){return this[I];}.bind(Data[i]),In);
     B.push(Acc);
     Acc = Fun.apply(null,B);
   }
   return Acc;
 }
 
-export function filter(Fun,Tbl){
+export function filter(Fun,Tbl,Colum,Query){
+  var Cidx = (typeof Colum === "string" ) ? Tbl.header.indexOf(Colum) : Colum;
   var Out = init(Tbl.name+" filter",Tbl.header.slice(0));
   var Data = Tbl.data, i;
+  if (Colum){
+    for (i = 0; i < Data.length; i++) {
+      if (0 == Fun(Data[i][Cidx],Query))
+        Out.data.push(Data[i]);
+    }
+  } else {
+    for (i = 0; i < Data.length; i++) {
+      if (0 == Fun(Data[i],Query))
+        Out.data.push(Data[i]);
+    }
+  }
+  return Out;
+}
+
+export function select(Fun,Tbl,Select,Query){
+  var Data = Tbl.data, i, B, R,
+    In = amap(function(D){
+      return (typeof D == "string") ? get_col(Tbl,D) : D; },Select);
+  var Out = init(Tbl.name+" filter",amap(function(I){return Tbl.header[I]},In));
   for (i = 0; i < Data.length; i++) {
-    if (Fun(Data[i]))
-      Out.data.push(Data[i]);
+    B = amap( function(I){return this[I];}.bind(Data[i]),In);
+    B.push(Query);
+    R = Fun.apply(null,B);
+    if(R)
+      Out.data.push(R);
   }
   return Out;
 }
@@ -200,7 +223,7 @@ export function sort(Fun, Colum, Tbl){
 
 export function search_and_get(Fun,Value,Colum,Key,Tbl){
   var Idx = search(Fun,Value,Colum,Tbl);
-  if (Idx > 0) {
+  if (Idx >= 0) {
     var Cidx = (typeof Colum === "string" ) ? Tbl.header.indexOf(Key) : Key;
     return Tbl.data[Idx][Cidx];
   }

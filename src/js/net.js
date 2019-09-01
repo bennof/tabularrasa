@@ -96,9 +96,9 @@ export function init(Name,Config){
       console.log(location.protocol+"//"+location.host);
       console.log(Params);
       if (Params.access_token){
-        window.parent.postMessage(Params.access_token,location.protocol+"//"+location.host);
+        window.parent.postMessage({state: 'ok',access_token: Params.access_token},location.protocol+"//"+location.host);
       } else {
-        window.parent.postMessage('relogin',location.protocol+"//"+location.host);
+        window.parent.postMessage({state: 'error',desc: 'relogin'},location.protocol+"//"+location.host);
       }
     }
   }
@@ -130,11 +130,14 @@ export function init(Name,Config){
   window.addEventListener('message', function(Event) {
     console.log('Event')
     console.log(Event.data);
-    if ('relogin' === Event.data)
-      alert('login needed')
-    else
-      this.access_token = Event.data;
 
+    if(Event.data.state){
+      if(Event.data.state === 'ok'){
+        this.access_token = Event.data.access_token;
+      } else {
+        alert('login needed')
+      }
+    }
     var Frame = document.getElementById('hidden_redirect_'+this.name);
     if(Frame)
       Frame.parentElement.removeChild(Frame);
@@ -227,6 +230,22 @@ export function login(Conn,State){
 }
 
 /**
+* LogOut
+* @param {Connection} Conn a connection object
+*/
+export function logout(Conn){
+  if(Conn.store){
+    if(Conn.store == 'session' )
+      window.sessionStorage.removeItem(Id_String + Conn.name);
+    else
+      window.localStorage.removeItem(Id_String + Conn.name);
+  }
+  Conn.access_token = null;
+  Conn.state = 1;
+  window.location.href = '/';
+}
+
+/**
 * perform refresh
 * @param {Connection} Conn a connection object
 */
@@ -252,15 +271,6 @@ export function refresh(Conn){
   //Iframe.src = Link
   Iframe.src =location.protocol+"//"+location.host+'/#state=refresh:'+Conn.name;
   document.body.appendChild(Iframe);
-
-//ok  https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize?
-//ok client_id=6731de76-14a6-49ae-97bc-6eba6914391e
-//ok response_type=token
-//ok &redirect_uri=http%3A%2F%2Flocalhost%2Fmyapp%2F
-//ok &scope=https%3A%2F%2Fgraph.microsoft.com%2Fuser.read
-//ok &response_mode=fragment
-//ok &state=12345&nonce=678910
-//ok &prompt=none
 }
 
 function refresh_(Conn,State){
@@ -283,21 +293,21 @@ function refresh_(Conn,State){
 
 
 export function get(Fun, Conn, Url, Type, Param){
-  return request(Fun, Conn, Url, null, Type, Param);
+  return request(Fun, Conn, 'GET', Url, null, Type, Param);
 }
 export function post(Fun, Conn, Url, Body, Type, Param){
-  return request(Fun, Conn, Url, Body, Type, Param);
+  return request(Fun, Conn, 'POST', Url, Body, Type, Param);
 }
 export function del(Fun, Conn, Url, Type, Param){
-  return request(Fun, Conn, Url, null, Type, Param);
+  return request(Fun, Conn, 'DELETE', Url, null, Type, Param);
 }
 // export function patch(){}
 
 
-function request(Fun, Conn, Url, Body, Type, Param){
+function request(Fun, Conn,Method ,Url, Body, Type, Param){
   var Xhttp = new XMLHttpRequest();
   // start request
-  Xhttp.open('GET', Url, true);
+  Xhttp.open(Method, Url, true);
   // config request
   if(Conn.access_token)
     Xhttp.setRequestHeader("Authorization", "Bearer "+Conn.access_token);

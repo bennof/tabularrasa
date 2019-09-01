@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
 
 const Components = [
 	"components/menu.html",
@@ -67,6 +67,10 @@ module.exports = {
     	new MiniCssExtractPlugin({
       	filename: "css/[name].css",
       	chunkFilename: "[id].css",
-    	})
+    	}),
+			new FaviconsWebpackPlugin({
+    		logo: "./src/img/edologo_s.svg",
+				cache: true
+			})
   	])
 }
