@@ -224,7 +224,7 @@ export function sort(Fun, Colum, Tbl){
 export function search_and_get(Fun,Value,Colum,Key,Tbl){
   var Idx = search(Fun,Value,Colum,Tbl);
   if (Idx >= 0) {
-    var Cidx = (typeof Colum === "string" ) ? Tbl.header.indexOf(Key) : Key;
+    var Cidx = (typeof Key === "string" ) ? Tbl.header.indexOf(Key) : Key;
     return Tbl.data[Idx][Cidx];
   }
 }

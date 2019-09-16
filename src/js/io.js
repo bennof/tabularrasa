@@ -38,8 +38,8 @@ export function open(Filen,Mime,Cb,Type) {
     if ( Mime )
       FileInput.setAttribute('accept',Mime);
     FileInput.addEventListener('change', function(){
-      open(this.input.files,this.mime,this.cb);
-    }.bind({input: FileInput, mime: Mime, cb: Cb}), false);
+      open(this.input.files,this.mime,this.cb,this.type);
+    }.bind({input: FileInput, mime: Mime, cb: Cb, type: Type}), false);
 
     // if (document.createEvent) {
     //   console.log("create event");
@@ -53,10 +53,15 @@ export function open(Filen,Mime,Cb,Type) {
     return;
   }
 
+  if(Type=="Files"){
+    Cb(200,Filen);
+    return;
+  }
 
   // Read files
   if(Filen.length) {
-    files_read(Filen,0,Mime,[],Cb);
+    console.log("files_read")
+    files_read(Filen,0,Mime,[],Cb,Type);
   } else {
     var Reader = new FileReader();
     Reader.onload = function(){

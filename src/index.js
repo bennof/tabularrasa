@@ -38,6 +38,8 @@ import * as popup  from "./js/popup.js";
 import * as table  from "./js/table.js";
 import * as url    from "./js/url.js";
 
+import * as mdb    from "./js/db/mdb.js";
+
 
 function run(OAuth){
   //read file
@@ -66,6 +68,16 @@ function run(OAuth){
 * Load CSV
 * @param {String} Name name of the loaded table
 */
+export function loadMDB(Name) {
+  io.open(null,"application/x-msaccess",function(S,D){
+    if(S === 200) {
+      window[Name] = mdb.open(Name,D[0]);
+    }
+    else
+      console.log(S,D);
+  },"Files");
+}
+
 export function loadCSV(Name) {
   io.open(null,"text/csv",function(S,D){
     if(S === 200) {
