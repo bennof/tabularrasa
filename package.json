@@ -2,12 +2,18 @@
   "name": "tabularrasa",
   "version": "0.2.2",
   "description": "A minimal CSS/JS library written in SCSS and JS.",
+  "demo": "bennof.github.io",
   "main": "index.js",
+  "engines": {
+    "ghost": ">=2.0.0",
+    "ghost-api": "v2"
+  },
   "directories": {
     "example": "example"
   },
   "dependencies": {},
   "devDependencies": {
+    "copy-webpack-plugin": "^5.0.4",
     "css-loader": "^3.2.0",
     "favicons-webpack-plugin": "^1.0.1",
     "file-loader": "^4.2.0",
@@ -22,11 +28,19 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "webpack --mode production --output-path .",
-    "dev": "webpack-dev-server --mode development --port 8080 --open",
-    "build-dev": "webpack",
-    "clean": "rm -rf example package-lock.json",
-    "clean-all": "rm -rf example node_modules package-lock.json"
+
+    "build": "webpack --config-name default --mode production --output-path .",
+    "build-dev": "webpack --config-name default",
+
+    "dev": "webpack-dev-server --config-name default --mode development --port 8080 --open",
+
+    "ghost": "webpack --config-name ghost --mode production",
+    "ghost-dev": "webpack --config-name ghost",
+    "ghost-zip": "webpack --config-name ghost --mode production && zip -r $(basename `pwd`).zip *.hbs assets partials package.json",
+
+
+    "clean": "rm -rf example js assets components partials images css package-lock.json; rm -f *.html *.hbs *.css *.zip",
+    "clean-all": "npm run clean; rm -rf node_modules"
   },
   "repository": {
     "type": "git",

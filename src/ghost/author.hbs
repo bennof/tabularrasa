@@ -1,0 +1,54 @@
+{{!< default}}
+{{!-- Author info --}}
+{{#author}}
+<section class="hero small"
+    {{#if cover_image}}
+        style="background-image: url('{{img_url cover_image}}');"
+    {{/if}}
+>
+    <div class="content">
+        <header>
+            {{#if profile_image}}
+                <img  src="{{profile_image}}" alt="{{name}}" width="80px" style="border-radius:50%;"/>
+            {{/if}}
+            <h1>{{name}}</h1>
+                {{#if bio}}
+                    <h3>{{bio}}</h3>
+                {{/if}}
+        </header>
+        <div class="author-meta">
+        {{#if location}}
+            <div class="author-location icon fa-map-pin">{{location}} <span class="bull">&bull;</span></div>
+        {{/if}}
+        <div class="author-stats">
+            {{plural ../pagination.total empty='No posts' singular='% post' plural='% posts'}} <span class="bull">&bull;</span>
+        </div>
+        {{#if website}}
+            <a href="{{url}}" class="icon fa-globe" title="Website"><span class="label">Website</span></a>
+        {{/if}}
+        {{#if twitter}}
+            <a href="{{twitter_url}}" class="icon fa-twitter" title="Twitter"><span class="label">Twitter</span></a>
+        {{/if}}
+        {{#if facebook}}
+            <a href="{{facebook_url}}" class="icon fa-facebook" title="Facebook"><span class="label">Facebook</span></a>
+        {{/if}}
+        <a href="https://feedly.com/i/subscription/feed/{{url absolute="true"}}rss/" class="icon fa-rss" target="_blank" rel="noopener"><span class="label" title="RSS">RSS</span></a>
+        </div>
+
+    </div>
+</section>
+
+{{/author}}
+
+{{!-- Posts --}}
+<article>
+    <h2>Neuigkeiten:</h2>
+    <section class="posts">
+        {{#foreach posts}}
+            {{> post_small}}
+        {{/foreach}}
+    </section>
+</article>
+
+{{!-- Pagination --}}
+{{pagination}}

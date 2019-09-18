@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="{{@site.lang}}">
+<head>
+    {{!-- Document Settings --}}
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    {{!-- Base Meta --}}
+    <title>{{meta_title}}</title>
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    {{!-- Styles'n'Scripts --}}
+    <link rel="stylesheet" type="text/css" href="{{asset "css/style.min.css"}}" />
+
+    {{!-- This tag outputs SEO meta+structured data and other important settings --}}
+    {{ghost_head}}
+
+    <style>
+        #sidemenu_switch ~ aside.sidebar { display: none; }
+        #sidemenu_switch:checked ~ aside.sidebar { display: block; }
+    </style>
+</head>
+
+<body>
+
+
+    <nav>
+        <label for="sidemenu_switch">
+            <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                <g fill="none"  stroke-width="4" stroke-linecap="round">
+                <path  d="M 4,8 L 28,8" />
+                <path  d="M 4,16 L 28,16" />
+                <path  d="M 4,24 L 28,24" />
+                </g>
+            </svg></label>
+        {{#if @site.logo}}
+            <a href="{{@site.url}}"><img src="{{@site.logo}}" alt="{{@site.title}}" /></a>
+        {{else}}
+            <a href="{{@site.url}}">{{@site.title}}</a>
+        {{/if}}
+        {{!-- Nav - partials/navigation.hbs --}}
+        {{#if @site.navigation}}
+            {{navigation}}
+        {{/if}}
+
+    </nav>
+    <input type="checkbox" id="sidemenu_switch" class="menu">
+    {{> sidebar}}
+
+
+    {{!-- All the main content gets inserted here, index.hbs, post.hbs, etc --}}
+    {{{body}}}
+
+
+
+    <footer>
+        {{> footer}}
+    </footer>
+    {{!-- Theme Scripts --}}
+
+    {{!-- Ghost outputs important scripts & data with the {ghost_foot} tag
+    it should always be the very last thing before the closing body tag --}}
+    {{ghost_foot}}
+</body>
+</html>
