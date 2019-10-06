@@ -28,17 +28,12 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-
     "build": "webpack --config-name default --mode production --output-path .",
     "build-dev": "webpack --config-name default",
-
     "dev": "webpack-dev-server --config-name default --mode development --port 8080 --open",
-
     "ghost": "webpack --config-name ghost --mode production",
     "ghost-dev": "webpack --config-name ghost",
     "ghost-zip": "webpack --config-name ghost --mode production && zip -r $(basename `pwd`).zip *.hbs assets partials package.json",
-
-
     "clean": "rm -rf example js assets components partials images css package-lock.json; rm -f *.html *.hbs *.css *.zip",
     "clean-all": "npm run clean; rm -rf node_modules"
   },
@@ -47,7 +42,10 @@
     "url": "git+https://github.com/bennof/tabularrasa.git"
   },
   "keywords": [],
-  "author": "Benjamin 'Benno' Falkner",
+  "author": {
+    "name": "Benjamin 'Benno' Falkner",
+    "email": "benno.falkner@gmail.com"
+  },
   "license": "MIT modified (no german)",
   "bugs": {
     "url": "https://github.com/bennof/tabularrasa/issues"

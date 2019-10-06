@@ -1,0 +1,23 @@
+<section class="hero small"
+    {{#if feature_image}}
+        style="background-image: url('{{img_url feature_image}}');"
+    {{/if}}
+>
+    <div class="content">
+        <header>
+            <h1>{{title}}</h1>
+                {{#if custom_excerpt}}
+                    <h3>{{custom_excerpt}}</h3>
+                {{else}}
+                    {{content words="42"}}
+                {{/if}}
+        </header>
+        <h3><a href="{{url}}">Learn More</a></h3>
+    </div>
+    <script>
+      var QUERY = (window.location.search.substr(1)).split("&");
+      if(QUERY.indexOf("presenter")>-1){
+        window.location="{{url}}?presenter";
+      }
+    </script>
+</section>

@@ -1,0 +1,9 @@
+<div class="pagination" role="navigation">
+    {{#if prev}}
+    <a href="{{page_url prev}}"> &lt; </a>
+    {{/if}}
+    <span>Seite {{page}} von {{pages}}</span>
+    {{#if next}}
+    <a href="{{page_url next}}">&gt;</a>
+    {{/if}}
+</div>
