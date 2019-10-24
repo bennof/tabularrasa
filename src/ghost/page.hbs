@@ -1,18 +1,24 @@
 {{!< default}}
+{{!-- Page --}}
 {{#post}}
 {{!-- Everything inside the #post tags pulls data from the page --}}
 
+<!-- header area -->
+{{#if feature_image}}
+<header class="hero is-medium is-primary is-bold " style="background: {{img_url feature_image}} center center; background-size:cover; ">
+{{else}}
+<header class="hero is-medium is-primary is-bold ">
+{{/if}}
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">{{title}}</h1>
+    </div>
+  </div>
+</header>
 
-<article>
-    <header>
-        {{#if feature_image}}
-        <div class="image main"><img src="{{img_url feature_image}}" alt="{{title}}" /></div>
-        {{/if}}
-        <h1>{{title}}</h1>
-    </header>
-
-    <section>
-        {{content}}
-    </section>
+<article class="section">
+  <section class="content">
+    {{content}}
+  </section>
 </article>
 {{/post}}

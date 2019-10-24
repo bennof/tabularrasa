@@ -27,13 +27,11 @@
 
 import './index.scss';
 
-i
 
-import * as maps   from "./js/maps.js";
+
 import * as net    from "./js/net.js"
 import * as o365   from "./js/o365.js";
 import * as oauth  from "./js/oauth.js";
-import * as pready from "./js/pageready.js";
 import * as table  from "./js/table.js";
 
 
@@ -42,80 +40,82 @@ import * as gui    from "./js/gui.js";
 import * as loader from "./js/loader.js";
 import * as io     from "./js/io.js";
 import * as url    from "./js/url.js";
+import * as pready from "./js/pageready.js";
+import * as maps   from "./js/maps.js";
 
 import * as mdb    from "./js/db/mdb.js";
 
 
-function run(OAuth){
-  //read file
-  io.open(null,"text/csv",function(S,D){
-    if(S === 200) {
-      // parse
-      var Teacher = table.read_csv("Lehrer",D[0].data,";");
-      document.teacher = Teacher;
-      Teacher = table.add_colum(Teacher,"OfficeID");
-      var Fn = table.get_col(Teacher,"Vorname"), Ln = table.get_col(Teacher,"Nachname"), Oid = table.get_col(Teacher,"OfficeID");
-      // check
-
-      table.map(function(Row){
-        //console.log(Row[Fn],Row[Ln])
-        o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
-          if(S === 200) this[Oid] = D;
-        }.bind(Row));
-        return Row;
-      },Teacher);
-      //console.log(3)
-    }
-  });
-}
-
-/**
-* Load CSV
-* @param {String} Name name of the loaded table
-*/
-export function loadMDB(Name) {
-  io.open(null,"application/x-msaccess",function(S,D){
-    if(S === 200) {
-      window[Name] = mdb.open(Name,D[0]);
-    }
-    else
-      console.log(S,D);
-  },"Files");
-}
-
-export function loadCSV(Name) {
-  io.open(null,"text/csv",function(S,D){
-    if(S === 200) {
-      window[Name] = table.read_csv(Name,D[0].data,";");
-    }
-    else
-      console.log(S,D);
-  });
-}
-
-export function saveCSV(Filen,Table){
-  save(Filen, "text/csv", table.write_csv(Table,";"));
-}
-
-function getOfficeID(Tbl,OAuth){
-  Tbl = table.add_colum(Tbl,"OfficeID");
-  var Fn = table.get_col(Tbl,"Vorname"), Ln = table.get_col(Tbl,"Nachname"), Oid = table.get_col(Tbl,"OfficeID");
-  table.map(function(Row){
-    o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
-      if(S === 200) this[Oid] = D;
-      else console.log(S,D);
-    }.bind(Row));
-    return Row;
-  },Tbl);
-}
-
-function create_classes(OAuth){
-
-}
-
-function fill_classes(OAuth){
-
-}
+//function run(OAuth){
+//  //read file
+//  io.open(null,"text/csv",function(S,D){
+//    if(S === 200) {
+//      // parse
+//      var Teacher = table.read_csv("Lehrer",D[0].data,";");
+//      document.teacher = Teacher;
+//      Teacher = table.add_colum(Teacher,"OfficeID");
+//      var Fn = table.get_col(Teacher,"Vorname"), Ln = table.get_col(Teacher,"Nachname"), Oid = table.get_col(Teacher,"OfficeID");
+//      // check
+//
+//      table.map(function(Row){
+//        //console.log(Row[Fn],Row[Ln])
+//        o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
+//          if(S === 200) this[Oid] = D;
+//        }.bind(Row));
+//        return Row;
+//      },Teacher);
+//      //console.log(3)
+//    }
+//  });
+//}
+//
+///**
+//* Load CSV
+//* @param {String} Name name of the loaded table
+//*/
+//export function loadMDB(Name) {
+//  io.open(null,"application/x-msaccess",function(S,D){
+//    if(S === 200) {
+//      window[Name] = mdb.open(Name,D[0]);
+//    }
+//    else
+//      console.log(S,D);
+//  },"Files");
+//}
+//
+//export function loadCSV(Name) {
+//  io.open(null,"text/csv",function(S,D){
+//    if(S === 200) {
+//      window[Name] = table.read_csv(Name,D[0].data,";");
+//    }
+//    else
+//      console.log(S,D);
+//  });
+//}
+//
+//export function saveCSV(Filen,Table){
+//  save(Filen, "text/csv", table.write_csv(Table,";"));
+//}
+//
+//function getOfficeID(Tbl,OAuth){
+//  Tbl = table.add_colum(Tbl,"OfficeID");
+//  var Fn = table.get_col(Tbl,"Vorname"), Ln = table.get_col(Tbl,"Nachname"), Oid = table.get_col(Tbl,"OfficeID");
+//  table.map(function(Row){
+//    o365.users.search(OAuth,{"givenName":Row[Fn],"surname":Row[Ln]},function(S,D){
+//      if(S === 200) this[Oid] = D;
+//      else console.log(S,D);
+//    }.bind(Row));
+//    return Row;
+//  },Tbl);
+//}
+//
+//function create_classes(OAuth){
+//
+//}
+//
+//function fill_classes(OAuth){
+//
+//}
 
 
 

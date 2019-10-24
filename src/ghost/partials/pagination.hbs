@@ -1,9 +1,12 @@
-<div class="pagination" role="navigation">
+<!-- pagination -->
+<footer class="section">
+  <nav class="pagination is-small" role="navigation" aria-label="pagination">
     {{#if prev}}
-    <a href="{{page_url prev}}"> &lt; </a>
+    <a href="{{page_url prev}}" class="pagination-previous">Previous</a>
+    {{/if}}
+    {{#if next}}
+    <a href="{{page_url next}}" class="pagination-next">Next page</a>
     {{/if}}
     <span>Seite {{page}} von {{pages}}</span>
-    {{#if next}}
-    <a href="{{page_url next}}">&gt;</a>
-    {{/if}}
-</div>
+  </nav>
+</footer>

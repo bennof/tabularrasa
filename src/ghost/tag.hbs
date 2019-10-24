@@ -1,22 +1,25 @@
 {{!< default}}
 {{!-- Tag info --}}
 {{#tag}}
-<section class="hero small"
-    {{#if feature_image}}
-        style="background-image: url('{{img_url feature_image}}');"
-    {{/if}}
->
-    <div class="content">
-        <header>
-            <h1>{{name}}</h1>
-                {{#if description}}
-                    <h3>{{description}}</h3>
-                {{else}}
-                    <p>A collection of {{plural ../pagination.total empty='posts' singular='% post' plural='% posts'}}</p>
-                {{/if}}
-        </header>
+
+<!-- header area -->
+{{#if feature_image}}
+<header class="hero is-medium is-primary is-bold " style="background: {{img_url feature_image}} center center; background-size:cover; ">
+{{else}}
+<header class="hero is-medium is-primary is-bold ">
+{{/if}}
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">{{name}}</h1>
+      {{#if description}}
+          <summary>{{description}}</summary>
+      {{else}}
+          <summary>A collection of {{plural ../pagination.total empty='posts' singular='% post' plural='% posts'}}</summary>
+      {{/if}}
     </div>
-</section>
+  </div>
+</header>
+
 {{/tag}}
 
 {{!-- Posts --}}
