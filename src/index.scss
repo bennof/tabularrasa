@@ -22,54 +22,102 @@
 
 // # Tabular Rasa Configuration
 @charset "UTF-8";
+//@import "~bulma/bulma";
+// Import a Google Font
+@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-// ## Color Table layout
-$background1: #ffffff;
-$background2: #f3f3f3;
+// Set your brand colors
+// $background1: #ffffff;
+$background: #fdfdfd;
 $color0: #666666;
 $color1: #cccccc;
 $color2: #3366cc;
 $color3: #003399;
 $color4: #6699ff;
 $color5: #ff9900;
+$purple: #8A4D76;
+$pink: #FA7C91;
+$brown: #757763;
+$beige-light: #D0D1CD;
+$beige-lighter: #EFF0EB;
 
-$radius: 5px;
+// Update Bulma's global variables
+$family-sans-serif: "Quicksand", sans-serif;
+$grey-dark: $color0;
+$grey-light: $color1;
+$primary: $color4;
+$link: $color2;
 
-// ## Font Configuration
-@import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
-$font0: sans-serif;
-$font1: 'Quicksand' sans-serif;
-$font-size: 12pt !default; // use points for text
+$widescreen-enabled: false;
+$fullhd-enabled: false;
 
-// ## Page Setup
-$page-width: 1000px !default; // defines max width
+// Update some of Bulma's component variables
+$body-background-color: $background;
+$control-border-width: 1px;
+$input-border-color: transparent;
+$input-shadow: none;
+$navbar-item-active-background-color: solid;
 
-// ## Tranlation
-$name-img:   'Figure';
-$name-table: 'Table';
-$name-code:  'Listing';
 
-// ## Imports
-// elements can be disabled by comments
-// ### Typography
-@import "./scss/typo";
-@import "./scss/form";
 
-// ### Page Layout
-@import "./scss/page";
-@import "./scss/hero";
+// Import only what you need from Bulma
+@import "../node_modules/bulma/sass/utilities/_all.sass";
+@import "../node_modules/bulma/sass/base/_all.sass";
+@import "../node_modules/bulma/sass/elements/_all.sass";
+@import "../node_modules/bulma/sass/form/_all.sass";
+@import "../node_modules/bulma/sass/components/_all.sass";
+@import "../node_modules/bulma/sass/grid/_all.sass";
+@import "../node_modules/bulma/sass/layout/_all.sass";
 
-// ### Menu Layout
-@import "./scss/menu";
 
-// ### Extentions
-@import "./scss/popup";
-@import "./scss/blocks";
-
-// ## Some Personal Settings
-html, body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-// ## Ghost CMS Extentions
+// // ## Color Table layout
+// $background1: #ffffff;
+// $background2: #f3f3f3;
+// $color0: #666666;
+// $color1: #cccccc;
+// $color2: #3366cc;
+// $color3: #003399;
+// $color4: #6699ff;
+// $color5: #ff9900;
+//
+// $radius: 5px;
+//
+// // ## Font Configuration
+// @import url('https://fonts.googleapis.com/css?family=Quicksand&display=swap');
+// $font0: sans-serif;
+// $font1: 'Quicksand' sans-serif;
+// $font-size: 12pt !default; // use points for text
+//
+// // ## Page Setup
+// $page-width: 1000px !default; // defines max width
+//
+// // ## Tranlation
+// $name-img:   'Figure';
+// $name-table: 'Table';
+// $name-code:  'Listing';
+//
+// // ## Imports
+// // elements can be disabled by comments
+// // ### Typography
+// @import "./scss/typo";
+// @import "./scss/form";
+//
+// // ### Page Layout
+// @import "./scss/page";
+// @import "./scss/hero";
+//
+// // ### Menu Layout
+// @import "./scss/menu";
+//
+// // ### Extentions
+// @import "./scss/popup";
+// @import "./scss/blocks";
+//
+// // ## Some Personal Settings
+// html, body {
+//     -webkit-font-smoothing: antialiased;
+//     -moz-osx-font-smoothing: grayscale;
+// }
+//
+// // ## Ghost CMS Extentions

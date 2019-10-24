@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tabular Rasa Library (using Bulma)</title>
+  </head>
+  <body>
+    <!-- main menu -->
+    <nav class="navbar is-white" role="navigation" aria-label="main navigation" tr-loader="/components/menu.html"/></nav>
+
+
+    <!-- content -->
+    <article tr-router="start.html"></article>
+
+    <!-- general footer -->
+    <footer class="footer" tr-loader="/components/footer.html"></footer>
+
+    <!-- use script -->
+    <script>
+      tr.loader.tag('tr-loader');
+      tr.loader.router('tr-router');
+      tr.gui.enable_nav_burger();
+    </script>
+  </body>
+</html>

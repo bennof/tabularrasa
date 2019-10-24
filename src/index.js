@@ -27,15 +27,20 @@
 
 import './index.scss';
 
-import * as io     from "./js/io.js";
-import * as loader from "./js/loader.js";
+i
+
 import * as maps   from "./js/maps.js";
 import * as net    from "./js/net.js"
 import * as o365   from "./js/o365.js";
 import * as oauth  from "./js/oauth.js";
 import * as pready from "./js/pageready.js";
-import * as popup  from "./js/popup.js";
 import * as table  from "./js/table.js";
+
+
+// renewed
+import * as gui    from "./js/gui.js";
+import * as loader from "./js/loader.js";
+import * as io     from "./js/io.js";
 import * as url    from "./js/url.js";
 
 import * as mdb    from "./js/db/mdb.js";
@@ -124,7 +129,7 @@ export {
   o365,
   oauth,
   pready,
-  popup,
   table,
+  gui,
   url
 }

@@ -41,6 +41,7 @@ export function html(Url,Target) {
     Target.innerHTML = e;
     clean_code(Target,'clean-code');
     exec_js(Target);
+    if (TagStore) tag(TagStore,Target);
   });
 };
 
@@ -67,12 +68,12 @@ export function data(Url,Cb) {
   xhr.send();
 };
 
-export function router(Tag){ // Tag: 'html-router'
+export function router(Tag){ // Tag: 'tr-router'
   var Elem = document.querySelector('['+Tag+']');
   var Map = hash_map(window.location);
   var Src = (Map[Tag])? Map[Tag]+".html" : Elem.getAttribute(Tag);
   // load default
-  html(SRC,Elem);
+  html(Src,Elem);
   // listen for changes
   window.onhashchange = function () {
     var Map = hash_map(window.location);
@@ -82,8 +83,10 @@ export function router(Tag){ // Tag: 'html-router'
 };
 
 // load data once
-export function tag(Tag) {
-  var i, Elem, Url, Elems = document.querySelectorAll('['+Tag+']');
+var TagStore = null;
+export function tag(Tag, Root = document) {
+  var i, Elem, Url, Elems = Root.querySelectorAll('['+Tag+']');
+  TagStore = Tag;
   for ( i=0; i<Elems.length; i++ ){
     Elem = Elems[i];
     Url = Elem.getAttribute(Tag);

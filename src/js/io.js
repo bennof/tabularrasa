@@ -28,75 +28,7 @@
 
 
 /*eslint no-unused-vars: ["error", { "args": "none" }]*/
-import {popup} from "./popup.js";
 
-export function open(Filen,Mime,Cb,Type) {
-  if(Filen == null) { // create dialog
-    var FileInput = document.createElement('input');
-    FileInput.setAttribute('type','file');
-    FileInput.setAttribute('id','testfile');
-    if ( Mime )
-      FileInput.setAttribute('accept',Mime);
-    FileInput.addEventListener('change', function(){
-      open(this.input.files,this.mime,this.cb,this.type);
-    }.bind({input: FileInput, mime: Mime, cb: Cb, type: Type}), false);
-
-    // if (document.createEvent) {
-    //   console.log("create event");
-    //   var Event = document.createEvent('MouseEvents');
-    //   Event.initEvent('click', true, true);
-    //   FileInput.click();//dispatchEvent(Event);
-    // } else {
-    //   FileInput.click();
-    // }
-    popup(FileInput,10000);
-    return;
-  }
-
-  if(Type=="Files"){
-    Cb(200,Filen);
-    return;
-  }
-
-  // Read files
-  if(Filen.length) {
-    console.log("files_read")
-    files_read(Filen,0,Mime,[],Cb,Type);
-  } else {
-    var Reader = new FileReader();
-    Reader.onload = function(){
-      Cb(200,Reader.result);
-    };
-    Reader.onerror = function(){
-      Cb(404,Reader.error);
-    };
-    if(Type == "DataURL")
-      Reader.readAsDataURL(Filen);
-    else
-      Reader.readAsText(Filen);
-  }
-}
-
-function files_read(Files,i,Mime,Res,Cb,Type){
-  // if done
-  if (Files.length <= i) {
-    Cb(200,Res);
-    return;
-  }
-
-  var F = Files[i], Reader = new FileReader();
-  Reader.onload = function(){
-    this.res.push({src: F.name, data: Reader.result});
-    files_read(this.files,this.i+1,this.mime,this.res,this.cb,this.Type)
-  }.bind({files: Files, i:i, mime: Mime, res: Res, cb: Cb, type: Type});
-  Reader.onerror = function(){
-    Cb(404,{src: F, error: Reader.error, data: Res});
-  };
-  if(Type == "DataURL")
-    Reader.readAsDataURL(F);
-  else
-    Reader.readAsText(F);
-}
 
 
 /**

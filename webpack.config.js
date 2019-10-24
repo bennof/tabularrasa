@@ -7,15 +7,22 @@ const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 const Components = [
+	"start.html",
+	"oauth2.html",
+	"using.html",
+	"code.html",
 	"components/menu.html",
-	"components/sidebar.html"
+	"components/footer.html",
+	"components/sidebar.html",
+	"components/pagination.html",
+	"components/table.html"
 ];
 
 function gen_components(){
 	return Components.map(Value => {
 		return new HtmlWebPackPlugin({
 			filename: Value,
-			template: './src/'+Value,
+			template: './src/html/'+Value,
 			inject: false
 		});
 	});
@@ -53,7 +60,7 @@ const Rules = {
 		},
 		{ // Html
 			test: /\.(html|htm|hbs)$/,
-			use: [{ loader: 'html-loader'}]
+			use: [{ loader: 'html-loader',options: { interpolate: true }}]
 		},
 		{ // Images
 			test: /\.(png|jpe?g|gif|svg)$/,
@@ -82,11 +89,17 @@ module.exports = [
   	module: Rules,
   	plugins:
 			gen_components().concat([
-    		new HtmlWebPackPlugin({ template: "./src/index.html", filename: "index.html", inject: "head" }),
+    		new HtmlWebPackPlugin({ template: "./src/html/index.html", filename: "index.html", inject: "head" }),
     		new MiniCssExtractPlugin({ filename: "css/[name].css", chunkFilename: "[id].css" }),
-				new FaviconsWebpackPlugin({ logo: "./src/img/edologo_s.svg", cache: true })
+			new FaviconsWebpackPlugin({ logo: "./src/img/edologo_s.svg", cache: true })
   		])
 	},
+/*
+ * VUE JS CONFIG *missing*
+ */
+/*
+ * GHOST CMS CONFIG
+ */
 	{
 		name: 'ghost',
 		mode: 'development',
