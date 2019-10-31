@@ -1,4 +1,4 @@
-# Tabular Rasa
+# Tabular Rasa (v0.2.3)
 
 A minimal CSS/JS library written in SCSS/JS/WebPack/.
 
