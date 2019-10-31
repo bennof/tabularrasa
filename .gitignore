@@ -3,5 +3,6 @@
 example
 node_modules
 priv
+assets
 package-lock.json
 .DS_Store
