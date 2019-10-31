@@ -103,7 +103,7 @@ module.exports = [
 	{
 		name: 'ghost',
 		mode: 'development',
-		entry: ['./src/index.js'],
+		entry: ['./src/index.ghost.js'],
   	devtool: 'source-map',
 		output: {
 			filename: 'assets/js/tabularrasa.js',

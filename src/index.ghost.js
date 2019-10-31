@@ -1,4 +1,4 @@
-/* Tabular Rasa JS URL
+/* Tabular Rasa JS Index
 ** Copyright (c) 2018-2019 Benjamin Benno Falkner
 **
 ** Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -22,38 +22,40 @@
 
 /**
 * Tabular Rasa
-* @module tr/url
+* @module tr
 */
 
-/*eslint no-unused-vars: ["error", { "args": "none" }]*/
+// Styles (Bulma based)
+import './index.scss';
 
-// scan header
-export function header_map(Xhttp){
-  var i, Elem, Key, Value, R={}, HL = Xhttp.getAllResponseHeaders().trim().split(/[\r\n]+/);
-  for ( i=0; i<HL.length; i++ ) {
-      Elem = HL[i].split(': ');
-      Key   = Elem.shift();
-      Value = Elem.join(': ');
-      R[Key] = Value;
+// Javascript
+import * as gui    from "./js/gui.js";
+import * as url    from "./js/url.js";
+
+// Ghost specific code
+function presenter_mode(PREV,NEXT,TIMEOUT){
+  var Query = url.query_map( document.location );
+  if(Query.presenter){
+    setTimeout(function(){
+      if(Query.rewind) {
+        if(PREV=="")
+          window.location=NEXT+"?presenter";
+        else
+          window.location=PREV+"?rewind&presenter";
+      } else {
+        if(NEXT=="")
+          window.location=PREV+"?rewind&presenter";
+        else
+          window.location=NEXT+"?presenter";
+      }
+    },TIMEOUT);
   }
-  return R;
 }
 
-export function hash_map(URL){
-  var i, R1, Res={}, Hash = (URL.hash.substr(1)).split("&");
-  for (i=0; i<Hash.length; i++) {
-      R1 = Hash[i].split("=");
-      Res[R1[0]]=decodeURIComponent(R1[1]) || R1[0];
-  }
-  return Res;
-}
 
-// window.location
-export function query_map(URL){
-  var i, R1, Res={}, Query = (URL.search.substr(1)).split("&");
-  for (i=0; i<Query.length; i++) {
-      R1 = Query[i].split("=");
-      Res[R1[0]]=R1[1] || R1[0];
-  }
-  return Res;
+//Exports
+export {
+  gui,
+  url,
+  presenter_mode
 }
