@@ -1,0 +1,9 @@
+<article >
+    {{#if feature_image}}
+        <a href="{{url}}" class="image fit"><img src="{{img_url feature_image}}" alt="{{title}}" /></a>
+    {{/if}}
+    <small class="date">{{date format="MMMM D, YYYY"}}</small>
+    <h3><a href="{{url}}">{{title}}</a></h3>
+    <p>{{excerpt words="33"}}</p>
+    <a href="{{url}}">Read more</a>
+</article>

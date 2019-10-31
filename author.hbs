@@ -1,0 +1,113 @@
+{{!< default}}
+{{!-- Author info --}}
+{{#author}}
+
+<!-- header area -->
+{{#if cover_image}}
+<header class="hero is-medium is-primary is-bold " style="background: url('{{img_url cover_image}}') center center; background-size:cover; ">
+{{else}}
+<header class="hero is-medium is-primary is-bold ">
+{{/if}}
+  <div class="hero-body">
+    <div class="container">
+      {{#if profile_image}} <img  src="{{profile_image}}" alt="{{name}}" width="80px" style="border-radius:50%;"/>{{/if}}
+      <h1 class="title">{{name}}</h1>
+      <h2 class="subtitle">{{plural ../pagination.total empty='No posts' singular='% post' plural='% posts'}}</h2>
+      {{#if bio}}<summary class="section">{{bio}}</summary>{{/if}}
+      <section class="level is-mobile">
+        {{#if location}}
+        <div class="level-item has-text-centered">
+          <div>
+            <p class="heading">Location</p>
+            <p class="subtitle">
+              <span class="icon"><i class="fa fa-map-pin"></i></span>
+              {{location}}
+            </p>
+          </div>
+        </div>
+        {{/if}}
+        {{#if website}}
+        <div class="level-item has-text-centered">
+          <a href="{{url}}" title="Website">
+            <p class="heading">Website</p>
+            <p class="subtitle">
+              <span class="icon"><i class="fa fa-globe"></i></span>
+            </p>
+          </a>
+        </div>
+        {{/if}}
+        {{#if twitter}}
+        <div class="level-item has-text-centered">
+          <a a href="{{twitter_url}}" title="Twitter">
+            <p class="heading">Twitter</p>
+            <p class="subtitle">
+              <span class="icon"><i class="fa fa-twitter"></i></span>
+            </p>
+          </a>
+        </div>
+        {{/if}}
+        {{#if facebook}}
+        <div class="level-item has-text-centered">
+          <a href="{{facebook_url}}" title="Facebook">
+            <p class="heading">Facebook</p>
+            <p class="subtitle">
+              <span class="icon"><i class="fa fa-facebook"></i></span>
+            </p>
+          </a>
+        </div>
+        {{/if}}
+        {{#if facebook}}
+        <div class="level-item has-text-centered">
+          <a href="https://feedly.com/i/subscription/feed/{{url absolute="true"}}rss/" title="RSS" target="_blank" rel="noopener">
+            <p class="heading">RSS</p>
+            <p class="subtitle">
+              <span class="icon"><i class="fa fa-rss"></i></span>
+            </p>
+          </a>
+        </div>
+        {{/if}}
+      </section>
+    </div>
+  </div>
+</header>
+
+{{/author}}
+
+{{!-- Posts --}}
+{{!-- All Posts --}}
+<article class="section">
+  <div class="columns is-multiline">
+    {{#foreach posts}}
+    <div class="column is-one-third">
+      <div class="card">
+        {{#if feature_image}}
+        <div class="card-image">
+          <figure class="image is-4by3">
+            <img src="{{img_url feature_image}}" alt="{{title}}">
+          </figure>
+        </div>
+        {{/if}}
+
+        {{!-- Content --}}
+        <div class="card-content">
+          <div class="media">
+            <div class="media-content">
+
+            </div>
+          </div>
+          <div class="content">
+            <h1>{{title}}</h1>
+            <small class="date">{{date format="MMMM D, YYYY"}}</small>
+
+            {{excerpt words="33"}}
+            <a href="{{url}}">Read more</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/foreach}}
+  </div>
+</article>
+
+{{!-- Pagination --}}
+{{pagination}}
