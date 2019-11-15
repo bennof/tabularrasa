@@ -91,12 +91,31 @@ module.exports = [
 			gen_components().concat([
     		new HtmlWebPackPlugin({ template: "./src/html/index.html", filename: "index.html", inject: "head" }),
     		new MiniCssExtractPlugin({ filename: "css/[name].css", chunkFilename: "[id].css" }),
-			new FaviconsWebpackPlugin({ logo: "./src/img/edologo_s.svg", cache: true })
+			  new FaviconsWebpackPlugin({ logo: "./src/img/edologo_s.svg", cache: true })
   		])
 	},
 /*
  * VUE JS CONFIG *missing*
  */
+ {
+	 name: 'ghost',
+	 mode: 'development',
+	 entry: ['./src/index.vue.js'],
+	 devtool: 'source-map',
+	 output: {
+		 filename: 'assets/js/tabularrasa.js',
+		 path: path.resolve(__dirname, '.'),
+		 library: 'tr',
+		 libraryTarget:'umd',
+		 globalObject: 'this'
+	 },
+	 module: Rules,
+	 plugins: [
+		 new MiniCssExtractPlugin({ filename: "assets/css/[name].css", chunkFilename: "[id].css" }),
+		 new CopyPlugin(gen_txt_files('./src/ghost','',/\.hbs$/)),
+		 new FaviconsWebpackPlugin({ logo: "./src/img/edologo_s.svg", cache: true })
+	 ]
+ }
 /*
  * GHOST CMS CONFIG
  */
