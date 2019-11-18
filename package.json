@@ -1,9 +1,10 @@
 {
   "name": "tabularrasa",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "A minimal CSS/JS library written in SCSS and JS.",
   "demo": "bennof.github.io",
-  "main": "index.js",
+  "main": "js/tabularrasa.js",
+  "style": "css/tr_main.css",
   "engines": {
     "ghost": ">=2.0.0",
     "ghost-api": "v2"
@@ -38,6 +39,8 @@
     "ghost": "webpack --config-name ghost --mode production",
     "ghost-dev": "webpack --config-name ghost",
     "ghost-zip": "webpack --config-name ghost --mode production && zip -r $(basename `pwd`).zip *.hbs assets partials package.json",
+    "vue": "webpack --config-name vue --mode production",
+    "vue-dev": "webpack --config-name vue",
     "clean": "rm -rf example js assets components partials images css package-lock.json; rm -f *.html *.hbs *.css *.zip",
     "clean-all": "npm run clean; rm -rf node_modules"
   },

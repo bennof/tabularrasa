@@ -98,12 +98,12 @@ module.exports = [
  * VUE JS CONFIG *missing*
  */
  {
-	 name: 'ghost',
+	 name: 'vue',
 	 mode: 'development',
 	 entry: ['./src/index.vue.js'],
 	 devtool: 'source-map',
 	 output: {
-		 filename: 'assets/js/tabularrasa.js',
+		 filename: 'js/tabularrasa.js',
 		 path: path.resolve(__dirname, '.'),
 		 library: 'tr',
 		 libraryTarget:'umd',
@@ -111,11 +111,11 @@ module.exports = [
 	 },
 	 module: Rules,
 	 plugins: [
-		 new MiniCssExtractPlugin({ filename: "assets/css/[name].css", chunkFilename: "[id].css" }),
-		 new CopyPlugin(gen_txt_files('./src/ghost','',/\.hbs$/)),
+		 new MiniCssExtractPlugin({ filename: "css/tr_[name].css", chunkFilename: "[id].css" }),
+		 //new CopyPlugin(gen_txt_files('./src/ghost','',/\.hbs$/)),
 		 new FaviconsWebpackPlugin({ logo: "./src/img/edologo_s.svg", cache: true })
 	 ]
- }
+ },
 /*
  * GHOST CMS CONFIG
  */
